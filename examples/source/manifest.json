@@ -1,0 +1,32 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Sword Trail",
+    "description": "Simple Trail example",
+    "uuid": "6aa1460d-1c7e-446b-b49b-fb100cc85a41",
+    "version": [
+      1,
+      0,
+      1
+    ],
+    "min_engine_version": [
+      1,
+      26,
+      40
+    ]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "ac320b63-bff1-48f9-aaf5-6d6c9de908be",
+      "version": [
+        1,
+        0,
+        1
+      ]
+    }
+  ],
+  "capabilities": [
+    "pbr"
+  ]
+}

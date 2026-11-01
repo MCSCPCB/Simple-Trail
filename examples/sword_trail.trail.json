@@ -1,0 +1,62 @@
+{
+  "format_version": 1,
+  "attachable": "minecraft:diamond_sword",
+  "geometry": "default",
+  "root": "root",
+  "points": {
+    "a": {
+      "bone": "sword",
+      "position": [
+        0,
+        9,
+        0
+      ]
+    },
+    "b": {
+      "bone": "sword",
+      "position": [
+        0,
+        20.5,
+        0
+      ]
+    }
+  },
+  "emitCondition": "c.item_slot=='main_hand'&&v.trail_attack>0.015&&v.trail_attack<0.88",
+  "lifetime": 0.2,
+  "sampleInterval": 0.025,
+  "width": {
+    "keys": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "exponent": 2,
+    "anchor": 0.5
+  },
+  "opacity": {
+    "keys": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "exponent": 1,
+    "value": 0.38
+  },
+  "color": "#b8e0ff",
+  "texture": "",
+  "blend": "additive",
+  "unlit": true,
+  "firstPersonSpace": "view_model",
+  "worldScale": 0.9375,
+  "teleportDistance": 2
+}

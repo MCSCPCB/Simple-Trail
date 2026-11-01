@@ -1,0 +1,17 @@
+{
+  "name": "simple-trail",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "examples": "node scripts/examples.mjs",
+    "test:blockbench": "node scripts/test-blockbench.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "jszip": "3.10.1",
+    "three": "0.170.0"
+  }
+}
