@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.player.first_person_attack": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "animations": [
+            {
+              "first_person_attack_rotation": "query.get_equipped_item_name == ''"
+            },
+            {
+              "first_person_attack_rotation_item": "query.get_equipped_item_name != ''"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -35,21 +35,6 @@
     isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
     mod
   ));
-  var __toBinary = Uint8Array.fromBase64 || /* @__PURE__ */ (() => {
-    var table = new Uint8Array(128);
-    for (var i = 0; i < 64; i++) table[i < 26 ? i + 65 : i < 52 ? i + 71 : i < 62 ? i - 4 : i * 4 - 205] = i;
-    return (base642) => {
-      var n = base642.length, bytes = new Uint8Array((n - (base642[n - 1] == "=") - (base642[n - 2] == "=")) * 3 / 4 | 0);
-      for (var i2 = 0, j = 0; i2 < n; ) {
-        var c0 = table[base642.charCodeAt(i2++)], c1 = table[base642.charCodeAt(i2++)];
-        var c2 = table[base642.charCodeAt(i2++)], c3 = table[base642.charCodeAt(i2++)];
-        bytes[j++] = c0 << 2 | c1 >> 4;
-        bytes[j++] = c1 << 4 | c2 >> 2;
-        bytes[j++] = c2 << 6 | c3;
-      }
-      return bytes;
-    };
-  })();
 
   // node_modules/jszip/dist/jszip.min.js
   var require_jszip_min = __commonJS({
@@ -2419,172 +2404,263 @@
 
   // lang/en.json
   var en_default = {
-    "trail.description": "Create animated trails for Bedrock attachables.",
+    "trail.description": "Create animated trails for Bedrock attachables",
     "trail.mode": "Trail",
-    "trail.structure": "Trail",
-    "trail.properties": "Trail Properties",
-    "trail.browser": "Trail Attachables",
     "trail.pack": "Resource Pack",
-    "trail.choose_pack": "Choose a Resource Pack",
-    "trail.no_pack": "No resource pack loaded",
-    "trail.import_pack": "Import Trail Resource Pack",
-    "trail.export_pack": "Export Trail Resource Pack",
-    "trail.example": "Sword Trail Example",
-    "trail.open": "Open",
-    "trail.close": "Close",
-    "trail.error": "Simple Trail",
-    "trail.available": "Available",
-    "trail.configured": "Configured",
-    "trail.unavailable": "Unavailable",
-    "trail.browser_tip": "Double-click to configure. Checked entries are exported. Select one geometry per attachable.",
-    "trail.include_export": "Include in export",
+    "trail.config": "Trail Configuration",
+    "trail.menu_import": "Import Trail Resource Pack...",
+    "trail.menu_export": "Export Trail Resource Pack...",
+    "trail.menu_browser": "Trail Attachables...",
+    "trail.import_config": "Import Trail Configuration...",
+    "trail.export_config": "Export Trail Configuration...",
+    "trail.tool_move": "Move",
+    "trail.tool_move_tip": "Move the selected end point or the whole attachable",
+    "trail.tool_rotate": "Rotate",
+    "trail.tool_rotate_tip": "Rotate the whole attachable to preview the swing",
+    "trail.play_preview": "Play Swing Preview",
+    "trail.pause_preview": "Pause Swing Preview",
+    "trail.test_swing": "Test Swing",
+    "trail.reset_preview": "Reset Preview",
+    "trail.empty_state": "Import a resource pack, then choose an attachable to add a trail to",
+    "trail.panel_structure": "Trail",
+    "trail.panel_properties": "Trail Properties",
     "trail.point_a": "Start A",
     "trail.point_b": "End B",
-    "trail.point_root": "Move the whole attachable",
-    "trail.import_config": "Import Trail Configuration",
-    "trail.export_config": "Export Trail Configuration",
-    "trail.config": "Trail Configuration",
-    "trail.reimport": "Import the original resource pack to export this saved project.",
-    "trail.preview": "Preview",
-    "trail.preview_tip": "Select the whole attachable and drag its move/rotate handle. Preview emission is controlled below, independently of the game Molang condition.",
-    "trail.pause": "Pause",
-    "trail.play": "Play Preview",
-    "trail.swing": "Test Swing",
-    "trail.reset": "Reset",
-    "trail.preview_emit": "Record new trail positions",
-    "trail.helpers": "Show sample points",
-    "trail.wireframe": "Show triangle edges",
-    "trail.empty": "Import a resource pack or open the Sword Trail example.",
-    "trail.points": "Sample Points",
+    "trail.point_root": "Whole Attachable",
+    "trail.point_root_tip": "Move or rotate the whole attachable to preview the swing",
+    "trail.link_unloaded": "Import the resource pack of this attachable before exporting",
+    "trail.import_pack_button": "Import Resource Pack...",
+    "trail.replace_pack_button": "Replace Resource Pack...",
+    "trail.export_button": "Export...",
+    "trail.bone": "Bone",
     "trail.position": "Position",
-    "trail.reference_root": "Reference root",
-    "trail.emission": "Emission",
-    "trail.condition": "Molang condition",
-    "trail.condition_tip": "v.trail_attack is the player attack progress. Use 1 for continuous emission. The preview switch does not evaluate arbitrary game queries.",
+    "trail.section_trigger": "Trigger",
+    "trail.trigger": "Emit Trail",
+    "trail.trigger_attack": "When Swinging",
+    "trail.trigger_held": "When Held in Main Hand",
+    "trail.custom": "Custom Molang",
+    "trail.custom_condition": "Molang Condition",
+    "trail.condition_tip": "v.trail_attack is the player attack progress, from 0 to 1",
+    "trail.section_trail": "Trail",
     "trail.lifetime": "Lifetime (s)",
-    "trail.interval": "Sample interval (s)",
-    "trail.cost": "%0 history segments · %1 triangles · %2 render controllers",
-    "trail.width_curve": "Width over lifetime",
-    "trail.alpha_curve": "Opacity over lifetime",
-    "trail.exponent": "Curve exponent",
-    "trail.anchor": "Width anchor",
-    "trail.anchor_tip": "0: start · 0.5: center · 1: end",
-    "trail.opacity": "Base opacity",
-    "trail.color": "Color",
-    "trail.blend": "Blending",
-    "trail.additive": "Additive",
-    "trail.alpha": "Alpha",
-    "trail.unlit": "Ignore lighting",
-    "trail.advanced": "Advanced",
-    "trail.fp_space": "First-person space",
-    "trail.view_model": "View model",
-    "trail.world": "World",
-    "trail.world_scale": "Actor model scale",
-    "trail.teleport": "Teleport reset (blocks)",
-    "trail.texture": "Trail texture path",
-    "trail.texture_tip": "Empty uses the bundled triangle mask. Custom PNGs must use the same triangular UV mask.",
-    "trail.curve_help": "Drag keys. Double-click to add. Arrow keys adjust the focused key.",
-    "trail.remove_key": "Remove Selected Key",
-    "trail.move": "Move",
-    "trail.rotate": "Rotate",
-    "trail.edit": "Edit Trail",
-    "trail.config_target": "This configuration targets a different attachable or geometry.",
-    "trail.import_first": "Import a resource pack first.",
-    "trail.no_config": "Configure and select at least one attachable in the browser before exporting.",
-    "trail.missing_geometry": "Missing geometry: %0",
-    "trail.error.expression": "Invalid Molang expression: %0"
+    "trail.lifetime_tip": "How long a trail position lasts before it disappears. Longer means a longer trail.",
+    "trail.width_curve": "Width Over Time",
+    "trail.curve_tip": "Drag a key to move it, double-click to add, right-click to delete",
+    "trail.section_advanced": "Advanced",
+    "trail.interval": "Sample Interval (s)",
+    "trail.interval_tip": "Smaller is smoother and uses more history segments",
+    "trail.anchor": "Shrink Direction",
+    "trail.anchor_tip": "A → B moves the A side toward B while keeping the B side in place. B → A does the reverse. Both → Center moves both sides toward their midpoint.",
+    "trail.anchor_a_to_b": "A → B",
+    "trail.anchor_b_to_a": "B → A",
+    "trail.anchor_center": "Both → Center",
+    "trail.anchor_saved": "Saved Custom Direction",
+    "trail.segments": "%0 of %1 segments",
+    "trail.fp_space": "First-Person Space",
+    "trail.fp_space_tip": "World space compensates for player movement and camera rotation",
+    "trail.space_view_model": "View Model",
+    "trail.space_world": "World",
+    "trail.teleport": "Teleport Trail",
+    "trail.teleport_tip": "On: connect the trail across a teleport. Off: clear history when consecutive position captures are more than 2 blocks apart.",
+    "trail.browser_title": "Trail Attachables",
+    "trail.choose_pack": "Choose a Resource Pack",
+    "trail.no_pack": "No resource pack imported",
+    "trail.no_attachables": "No attachables",
+    "trail.no_pack_hint": "Import a .mcpack, .mcaddon or .zip to list its attachables",
+    "trail.browser_hint": "Double-click an attachable to set up its trail. Checked ones are exported. Each attachable can use only one geometry.",
+    "trail.export_title": "Export Trail Resource Pack",
+    "trail.pack_name": "Pack Name",
+    "trail.export_count": "Export %0 attachables",
+    "trail.select_all": "Select All",
+    "trail.deselect_all": "Select None",
+    "trail.export_confirm": "Export",
+    "trail.cancel": "Cancel",
+    "trail.no_configured": "No configured attachables",
+    "trail.status_ready": "Configured",
+    "trail.status_new": "Not configured",
+    "trail.status_invalid": "Unavailable",
+    "trail.open": "Open",
+    "trail.close": "Close",
+    "trail.edit_label": "Edit trail",
+    "trail.error_title": "Trail Error",
+    "trail.error.import_first": "Import the source resource pack before exporting.",
+    "trail.error.no_selection": "Select at least one configured attachable.",
+    "trail.error.missing_geometry": "Missing geometry: %0",
+    "trail.error.config_target": "This configuration belongs to a different attachable or geometry.",
+    "trail.error.expression": "Invalid Molang expression: %0",
+    "trail.error.config_version": "This trail configuration version is not supported.",
+    "trail.error.config_field": "The trail configuration is missing %0.",
+    "trail.error.bone_name": "Bone names cannot contain control characters, quotes or backslashes.",
+    "trail.error.duplicate_bone": "Some bones share the same name.",
+    "trail.error.bone_cycle": "The bone hierarchy contains a cycle.",
+    "trail.error.bone_parent": "Missing parent bone: %0",
+    "trail.error.endpoint_bone": "Missing end point bone: %0",
+    "trail.error.endpoint_position": "End point positions must contain three finite numbers.",
+    "trail.error.range": "%0 must be a number from %1 to %2.",
+    "trail.error.segments": "A trail can have at most %0 history segments. Shorten the lifetime or increase the sample interval.",
+    "trail.error.curve_keys": "%0 needs 2 to 12 keys.",
+    "trail.error.curve_key": "%0 has an invalid key.",
+    "trail.error.curve_order": "The key times of %0 must increase.",
+    "trail.error.curve_ends": "%0 must start at 0 and end at 1.",
+    "trail.error.render": "The first-person space setting is invalid.",
+    "trail.error.condition": "The Molang condition is invalid.",
+    "trail.error.json": "Invalid JSON: %0",
+    "trail.error.duplicate_attachable": "Duplicate attachable: %0",
+    "trail.error.duplicate_geometry": "Duplicate geometry: %0",
+    "trail.error.archive_depth": "The archive is nested more than two levels deep.",
+    "trail.error.archive_path": "Invalid archive path: %0",
+    "trail.error.archive_size": "The archive exceeds 256 MB or 20,000 files.",
+    "trail.error.no_attachables": "No resource packs with attachables were found.",
+    "trail.error.generated_meta": "The generated trail metadata is invalid.",
+    "trail.error.generated_path": "Invalid generated resource path: %0",
+    "trail.error.attachable_backup": "Invalid attachable backup: %0",
+    "trail.error.material_backup": "The material backup is invalid.",
+    "trail.error.generated_exists": "Generated path already exists: %0",
+    "trail.error.missing_attachable": "Missing attachable: %0",
+    "trail.error.one_geometry": "Each attachable can use only one geometry.",
+    "trail.error.marker_collision": "A bone name collides with a generated end point bone.",
+    "trail.error.molang_size": "A Molang expression exceeds 61,500 characters. Reduce the sampling density or the number of curve keys.",
+    "trail.error.alias_collision": "A generated alias collides with an existing definition.",
+    "trail.error.scripts_array": "scripts.%0 must be an array.",
+    "trail.error.teleport": "Teleport Trail must be on or off."
   };
 
   // lang/zh.json
   var zh_default = {
     "trail.description": "为基岩版附着物制作动态拖尾",
     "trail.mode": "拖尾",
-    "trail.structure": "拖尾",
-    "trail.properties": "拖尾属性",
-    "trail.browser": "拖尾附着物",
     "trail.pack": "资源包",
-    "trail.choose_pack": "选择资源包",
-    "trail.no_pack": "尚未导入资源包",
-    "trail.import_pack": "导入拖尾资源包",
-    "trail.export_pack": "导出拖尾资源包",
-    "trail.example": "Sword Trail 示例",
-    "trail.open": "打开",
-    "trail.close": "关闭",
-    "trail.error": "Simple Trail",
-    "trail.available": "可配置",
-    "trail.configured": "已配置",
-    "trail.unavailable": "不可用",
-    "trail.browser_tip": "双击配置拖尾，勾选要导出的项目，每个附着物选择一个模型",
-    "trail.include_export": "加入导出",
+    "trail.config": "拖尾配置",
+    "trail.menu_import": "导入拖尾资源包...",
+    "trail.menu_export": "导出拖尾资源包...",
+    "trail.menu_browser": "拖尾附着物...",
+    "trail.import_config": "导入拖尾配置...",
+    "trail.export_config": "导出拖尾配置...",
+    "trail.tool_move": "移动",
+    "trail.tool_move_tip": "移动选中的端点或整个附着物",
+    "trail.tool_rotate": "旋转",
+    "trail.tool_rotate_tip": "旋转整个附着物，预览挥动效果",
+    "trail.play_preview": "播放挥动预览",
+    "trail.pause_preview": "暂停挥动预览",
+    "trail.test_swing": "试挥一次",
+    "trail.reset_preview": "重置预览",
+    "trail.empty_state": "导入资源包，然后选择要添加拖尾的附着物",
+    "trail.panel_structure": "拖尾",
+    "trail.panel_properties": "拖尾属性",
     "trail.point_a": "起点 A",
     "trail.point_b": "终点 B",
-    "trail.point_root": "操纵整个附着物",
-    "trail.import_config": "导入拖尾配置",
-    "trail.export_config": "导出拖尾配置",
-    "trail.config": "拖尾配置",
-    "trail.reimport": "导入原资源包后，即可导出这个已保存的项目",
-    "trail.preview": "模拟预览",
-    "trail.preview_tip": "选择整个附着物，用移动或旋转手柄模拟挥动。预览是否产生轨迹由下方开关控制，独立于游戏中的 Molang 条件",
-    "trail.pause": "暂停",
-    "trail.play": "运行模拟",
-    "trail.swing": "试挥一次",
-    "trail.reset": "复位",
-    "trail.preview_emit": "记录新的轨迹",
-    "trail.helpers": "显示采样点",
-    "trail.wireframe": "显示三角面网格",
-    "trail.empty": "导入资源包，或打开 Sword Trail 示例",
-    "trail.points": "采样点",
+    "trail.point_root": "整个附着物",
+    "trail.point_root_tip": "移动或旋转整个附着物，预览挥动效果",
+    "trail.link_unloaded": "导出前需要导入这个附着物所在的资源包",
+    "trail.import_pack_button": "导入资源包...",
+    "trail.replace_pack_button": "更换资源包...",
+    "trail.export_button": "导出...",
+    "trail.bone": "骨骼",
     "trail.position": "位置",
-    "trail.reference_root": "参考根骨骼",
-    "trail.emission": "轨迹采样",
-    "trail.condition": "Molang 条件",
-    "trail.condition_tip": "v.trail_attack 为玩家攻击进度，填 1 可持续产生轨迹。预览开关不执行任意游戏查询",
+    "trail.section_trigger": "触发",
+    "trail.trigger": "产生拖尾",
+    "trail.trigger_attack": "挥动攻击时",
+    "trail.trigger_held": "持握在主手时",
+    "trail.custom": "自定义 Molang",
+    "trail.custom_condition": "Molang 条件",
+    "trail.condition_tip": "v.trail_attack 是玩家的攻击进度，范围 0 至 1",
+    "trail.section_trail": "拖尾",
     "trail.lifetime": "保留时间（秒）",
+    "trail.lifetime_tip": "轨迹从生成到消失的时间，越长拖尾越长",
+    "trail.width_curve": "宽度变化",
+    "trail.curve_tip": "拖动关键点移动，双击添加，右键删除",
+    "trail.section_advanced": "高级",
     "trail.interval": "采样间隔（秒）",
-    "trail.cost": "%0 段历史 · %1 个三角面 · %2 个渲染控制器",
-    "trail.width_curve": "宽度随寿命变化",
-    "trail.alpha_curve": "不透明度随寿命变化",
-    "trail.exponent": "曲线指数",
-    "trail.anchor": "收缩中心",
-    "trail.anchor_tip": "0：起点 · 0.5：中点 · 1：终点",
-    "trail.opacity": "基础不透明度",
-    "trail.color": "颜色",
-    "trail.blend": "混合方式",
-    "trail.additive": "发光叠加",
-    "trail.alpha": "透明混合",
-    "trail.unlit": "忽略环境光照",
-    "trail.advanced": "高级设置",
+    "trail.interval_tip": "越小越平滑，历史段数也越多",
+    "trail.anchor": "收缩方向",
+    "trail.anchor_tip": "A → B：A 侧向 B 收拢，B 侧保持不动。B → A 则相反；两端 → 中间表示两侧同时向中点收拢。",
+    "trail.anchor_a_to_b": "A → B",
+    "trail.anchor_b_to_a": "B → A",
+    "trail.anchor_center": "两端 → 中间",
+    "trail.anchor_saved": "原有自定义方向",
+    "trail.segments": "当前 %0 段，最多 %1 段",
     "trail.fp_space": "第一人称空间",
-    "trail.view_model": "手持模型空间",
-    "trail.world": "世界空间",
-    "trail.world_scale": "角色模型缩放",
-    "trail.teleport": "瞬移重置距离（格）",
-    "trail.texture": "拖尾贴图路径",
-    "trail.texture_tip": "留空使用内置三角形贴图，自定义 PNG 需遵循相同的三角形 UV 遮罩",
-    "trail.curve_help": "拖动关键点，双击添加，方向键调整焦点关键点",
-    "trail.remove_key": "删除选中关键点",
-    "trail.move": "移动",
-    "trail.rotate": "旋转",
-    "trail.edit": "编辑拖尾",
-    "trail.config_target": "这个配置指向其他附着物或模型",
-    "trail.import_first": "请先导入资源包",
-    "trail.no_config": "请先配置附着物，并在列表中勾选至少一个导出项目",
-    "trail.missing_geometry": "缺少模型：%0",
-    "trail.error.expression": "无效的 Molang 表达式：%0"
+    "trail.fp_space_tip": "世界空间会补偿玩家移动和镜头转动",
+    "trail.space_view_model": "手持模型空间",
+    "trail.space_world": "世界空间",
+    "trail.teleport": "瞬移拖尾",
+    "trail.teleport_tip": "开启：连接瞬移前后的轨迹。关闭：相邻两次位置记录相距超过 2 格时清空旧轨迹。",
+    "trail.browser_title": "拖尾附着物",
+    "trail.choose_pack": "选择资源包",
+    "trail.no_pack": "未导入资源包",
+    "trail.no_attachables": "没有附着物",
+    "trail.no_pack_hint": "导入 .mcpack、.mcaddon 或 .zip 后列出其中的附着物",
+    "trail.browser_hint": "双击附着物设置拖尾，勾选后导出。同一个附着物只能选择一个模型。",
+    "trail.export_title": "导出拖尾资源包",
+    "trail.pack_name": "资源包名称",
+    "trail.export_count": "导出 %0 个附着物",
+    "trail.select_all": "全选",
+    "trail.deselect_all": "全不选",
+    "trail.export_confirm": "导出",
+    "trail.cancel": "取消",
+    "trail.no_configured": "没有已配置的附着物",
+    "trail.status_ready": "已配置",
+    "trail.status_new": "未配置",
+    "trail.status_invalid": "不可用",
+    "trail.open": "打开",
+    "trail.close": "关闭",
+    "trail.edit_label": "编辑拖尾",
+    "trail.error_title": "拖尾错误",
+    "trail.error.import_first": "导出需要先导入源资源包。",
+    "trail.error.no_selection": "至少选择一个已配置的附着物。",
+    "trail.error.missing_geometry": "缺少模型：%0",
+    "trail.error.config_target": "这个配置属于其他附着物或模型。",
+    "trail.error.expression": "无效的 Molang 表达式：%0",
+    "trail.error.config_version": "不支持这个版本的拖尾配置。",
+    "trail.error.config_field": "拖尾配置缺少 %0。",
+    "trail.error.bone_name": "骨骼名称不能包含控制字符、引号或反斜杠。",
+    "trail.error.duplicate_bone": "存在重名的骨骼。",
+    "trail.error.bone_cycle": "骨骼层级存在循环。",
+    "trail.error.bone_parent": "找不到父骨骼：%0",
+    "trail.error.endpoint_bone": "找不到端点所在的骨骼：%0",
+    "trail.error.endpoint_position": "端点位置必须是三个有限的数字。",
+    "trail.error.range": "%0 必须为 %1 至 %2 之间的数字。",
+    "trail.error.segments": "历史最多 %0 段，请缩短保留时间或增大采样间隔。",
+    "trail.error.curve_keys": "%0 需要 2 至 12 个关键点。",
+    "trail.error.curve_key": "%0 的关键点无效。",
+    "trail.error.curve_order": "%0 的关键点时间必须递增。",
+    "trail.error.curve_ends": "%0 必须从 0 开始，到 1 结束。",
+    "trail.error.render": "第一人称空间设置无效。",
+    "trail.error.condition": "Molang 条件无效。",
+    "trail.error.json": "JSON 无效：%0",
+    "trail.error.duplicate_attachable": "附着物重复：%0",
+    "trail.error.duplicate_geometry": "模型重复：%0",
+    "trail.error.archive_depth": "压缩包嵌套超过两层。",
+    "trail.error.archive_path": "压缩包路径无效：%0",
+    "trail.error.archive_size": "压缩包超过 256 MB 或 20000 个文件的限制。",
+    "trail.error.no_attachables": "没有找到包含附着物的资源包。",
+    "trail.error.generated_meta": "生成的拖尾元数据无效。",
+    "trail.error.generated_path": "生成的资源路径无效：%0",
+    "trail.error.attachable_backup": "附着物备份无效：%0",
+    "trail.error.material_backup": "材质备份无效。",
+    "trail.error.generated_exists": "生成的路径已存在：%0",
+    "trail.error.missing_attachable": "缺少附着物：%0",
+    "trail.error.one_geometry": "每个附着物只能选择一个模型。",
+    "trail.error.marker_collision": "骨骼名称与生成的端点骨骼冲突。",
+    "trail.error.molang_size": "Molang 表达式超过 61500 个字符，请降低采样密度或减少曲线关键点。",
+    "trail.error.alias_collision": "生成的别名与现有定义冲突。",
+    "trail.error.scripts_array": "scripts.%0 必须是数组。",
+    "trail.error.teleport": "瞬移拖尾必须为开或关。"
   };
 
   // src/i18n.js
+  var format = (text, values) => text.replace(/%(\d+)/g, (_, i) => String(values[i] ?? ""));
   function registerTranslations() {
     Language.addTranslations("en", en_default);
     Language.addTranslations("zh", zh_default);
   }
-  function t(key, args = []) {
-    const id = "trail." + key, fallback = (en_default[id] ?? key).replace(/%(\d+)/g, (_, n) => args[n] ?? "");
-    return typeof globalThis.tl === "function" ? tl(id, args, fallback) : fallback;
+  function t(key, values = []) {
+    const id = "trail." + key, fallback = format(en_default[id] ?? id, values);
+    return typeof globalThis.tl === "function" ? globalThis.tl(id, values, fallback) : fallback;
   }
-  function fail(key, args = []) {
-    throw new Error(t("error." + key, args));
-  }
+  var fail = (key, values = []) => {
+    throw new Error(t("error." + key, values));
+  };
 
   // src/core/parse.mjs
   var forbidden = /* @__PURE__ */ new Set(["constructor", "prototype", "__proto__"]);
@@ -2675,14 +2751,21 @@
 
   // src/config.js
   var clone = (value) => JSON.parse(JSON.stringify(value));
+  var MAX_SEGMENTS = 32;
+  var DISCONTINUITY_DISTANCE = 2;
   var DEFAULT_CONDITION = "c.item_slot=='main_hand'&&v.trail_attack>0.015&&v.trail_attack<0.88";
+  var TRIGGERS = { attack: DEFAULT_CONDITION, held: "c.item_slot=='main_hand'" };
+  var presetOf = (condition) => Object.entries(TRIGGERS).find(([, value]) => value === condition)?.[0] ?? "custom";
+  var segmentCount = (config) => Math.ceil(Math.round(config.lifetime / config.sampleInterval * 1e6) / 1e6);
+  var fitInterval = (lifetime, interval) => Math.max(interval, Math.ceil(Math.round(lifetime / MAX_SEGMENTS * 1e6) / 1e3) / 1e3);
+  var exponentOf = (curve) => curve.exponent ?? 1;
   var curveValue = (curve, u) => {
     u = Math.max(0, Math.min(1, u));
     const keys = curve.keys;
     let i = 1;
     while (i < keys.length - 1 && u > keys[i][0]) i++;
     const [a, b] = [keys[i - 1], keys[i]], v = a[1] + (b[1] - a[1]) * (u - a[0]) / (b[0] - a[0]);
-    return Math.pow(Math.max(0, v), curve.exponent);
+    return Math.pow(Math.max(0, v), exponentOf(curve));
   };
   function curveMolang(curve, u) {
     const keys = curve.keys;
@@ -2691,88 +2774,87 @@
       const a = keys[i], b = keys[i + 1];
       out = `${u}<${b[0]}?math.lerp(${a[1]},${b[1]},(${u}-${a[0]})/${b[0] - a[0]}):(${out})`;
     }
-    return `math.pow(math.max(0,(${out})),${curve.exponent})`;
+    return exponentOf(curve) === 1 ? `math.max(0,(${out}))` : `math.pow(math.max(0,(${out})),${exponentOf(curve)})`;
+  }
+  function normalize(config) {
+    const c = clone(config);
+    const curve = c.width;
+    if (curve && curve.exponent !== void 0) {
+      if (curve.exponent !== 1 && Array.isArray(curve.keys) && curve.keys.length > 1) curve.keys = Array.from({ length: 11 }, (_, i) => [i / 10, Number(curveValue(curve, i / 10).toFixed(4))]);
+      delete curve.exponent;
+    }
+    c.teleportTrail ??= c.teleportDistance === 0;
+    for (const key of ["color", "opacity", "blend", "unlit", "texture", "root", "worldScale", "teleportDistance"]) delete c[key];
+    return c;
   }
   function defaults(attachable, geometry, model) {
-    const roots = model.bones.filter((b2) => !b2.parent), root = roots[0]?.name ?? "root";
+    const roots = model.bones.filter((b2) => !b2.parent);
     const bone = model.bones.find((b2) => b2.name === "sword") ?? model.bones.find((b2) => b2.cubes?.length || b2.texture_meshes?.length) ?? roots[0];
     const a = model.bones.find((b2) => b2.name === "st_blade_base"), b = model.bones.find((b2) => b2.name === "st_blade_tip");
     return {
       format_version: 1,
       attachable,
       geometry,
-      root,
       points: { a: { bone: a?.parent ?? bone.name, position: clone(a?.pivot ?? bone.pivot ?? [0, 0, 0]) }, b: { bone: b?.parent ?? bone.name, position: clone(b?.pivot ?? [...bone.pivot ?? [0, 0, 0]].map((v, i) => v + (i === 1 ? 10 : 0))) } },
       emitCondition: DEFAULT_CONDITION,
       lifetime: 0.2,
       sampleInterval: 0.025,
-      width: { keys: [[0, 1], [1, 0]], exponent: 2, anchor: 0.5 },
-      opacity: { keys: [[0, 1], [1, 1]], exponent: 1, value: 0.38 },
-      color: "#b8e0ff",
-      texture: "",
-      blend: "additive",
-      unlit: true,
+      width: { keys: [[0, 1], [0.25, 0.5625], [0.5, 0.25], [0.75, 0.0625], [1, 0]], anchor: 0.5 },
       firstPersonSpace: "view_model",
-      worldScale: 0.9375,
-      teleportDistance: 2
+      teleportTrail: false
     };
   }
+  function referenceRoot(config, model) {
+    const map = new Map(model.bones.map((b) => [b.name, b]));
+    let bone = map.get(config.points.a.bone);
+    while (bone.parent) bone = map.get(bone.parent);
+    return bone.name;
+  }
   function validate(config, model) {
-    const c = clone(config);
-    const bad = (message) => {
-      throw new Error(message);
-    };
-    if (c.format_version !== 1) bad("Unsupported trail configuration version.");
-    for (const k of ["attachable", "geometry", "root"]) if (typeof c[k] !== "string" || !c[k]) bad(`Missing ${k}.`);
+    const c = normalize(config);
+    if (c.format_version !== 1) fail("config_version");
+    for (const k of ["attachable", "geometry"]) if (typeof c[k] !== "string" || !c[k]) fail("config_field", [k]);
     const names = new Set(model.bones.map((b) => b.name));
-    for (const name of names) if (typeof name !== "string" || !name || /[\x00-\x1f'\\]/.test(name)) bad("Bone names cannot contain control characters, quotes or backslashes.");
-    if (names.size !== model.bones.length) bad("Duplicate bone names.");
+    for (const name of names) if (typeof name !== "string" || !name || /[\x00-\x1f'\\]/.test(name)) fail("bone_name");
+    if (names.size !== model.bones.length) fail("duplicate_bone");
     const map = new Map(model.bones.map((b) => [b.name, b]));
     for (const b of model.bones) {
       const seen = /* @__PURE__ */ new Set();
       let n = b;
       while (n) {
-        if (seen.has(n.name)) bad("Cyclic bone hierarchy.");
+        if (seen.has(n.name)) fail("bone_cycle");
         seen.add(n.name);
-        if (n.parent && !map.has(n.parent)) bad(`Missing parent: ${n.parent}`);
+        if (n.parent && !map.has(n.parent)) fail("bone_parent", [n.parent]);
         n = map.get(n.parent);
       }
     }
-    if (!names.has(c.root) || map.get(c.root).parent) bad("The reference root must be a top-level bone.");
     for (const end of ["a", "b"]) {
       const p = c.points?.[end];
-      if (!p || !names.has(p.bone)) bad(`Missing endpoint bone: ${p?.bone ?? end}`);
-      if (!Array.isArray(p.position) || p.position.length !== 3 || p.position.some((v) => !Number.isFinite(v))) bad("Endpoint positions must contain three finite numbers.");
+      if (!p || !names.has(p.bone)) fail("endpoint_bone", [p?.bone ?? end]);
+      if (!Array.isArray(p.position) || p.position.length !== 3 || p.position.some((v) => !Number.isFinite(v))) fail("endpoint_position");
     }
     const range = (v, a, b, key) => {
-      if (!Number.isFinite(v) || v < a || v > b) bad(`${key}: ${a}–${b}`);
+      if (!Number.isFinite(v) || v < a || v > b) fail("range", [key, a, b]);
     };
     range(c.lifetime, 0.025, 2, "lifetime");
     range(c.sampleInterval, 8e-3, 0.1, "sampleInterval");
-    if (Math.ceil(c.lifetime / c.sampleInterval) > 32) bad("Use at most 32 history segments. Increase the sampling interval or shorten the lifetime.");
+    if (segmentCount(c) > MAX_SEGMENTS) fail("segments", [MAX_SEGMENTS]);
     range(c.width?.anchor, 0, 1, "anchor");
-    range(c.opacity?.value, 0, 1, "opacity");
-    range(c.worldScale, 0.01, 10, "worldScale");
-    range(c.teleportDistance, 0.1, 128, "teleportDistance");
-    for (const name of ["width", "opacity"]) {
-      const v = c[name];
-      range(v.exponent, 0.1, 8, `${name} exponent`);
-      if (!Array.isArray(v.keys) || v.keys.length < 2 || v.keys.length > 12) bad("Curves need 2–12 keys.");
-      let last = -1;
-      for (const p of v.keys) {
-        if (!Array.isArray(p) || p.length !== 2) bad("Invalid curve key.");
-        range(p[0], 0, 1, "key time");
-        range(p[1], 0, name === "width" ? 4 : 1, "key value");
-        if (p[0] <= last) bad("Curve times must increase.");
-        last = p[0];
-      }
-      if (v.keys[0][0] !== 0 || v.keys.at(-1)[0] !== 1) bad("Curves must start at 0 and end at 1.");
+    if (typeof c.teleportTrail !== "boolean") fail("teleport");
+    const width = c.width;
+    if (!width || !Array.isArray(width.keys) || width.keys.length < 2 || width.keys.length > 12) fail("curve_keys", ["width"]);
+    let last = -1;
+    for (const p of width.keys) {
+      if (!Array.isArray(p) || p.length !== 2) fail("curve_key", ["width"]);
+      range(p[0], 0, 1, "width time");
+      range(p[1], 0, 4, "width value");
+      if (p[0] <= last) fail("curve_order", ["width"]);
+      last = p[0];
     }
-    if (!/^#[0-9a-f]{6}$/i.test(c.color)) bad("Invalid color.");
-    if (!["additive", "alpha"].includes(c.blend) || !["view_model", "world"].includes(c.firstPersonSpace) || typeof c.unlit !== "boolean") bad("Invalid rendering settings.");
-    if (typeof c.emitCondition !== "string" || !c.emitCondition.trim() || c.emitCondition.length > 2e3) bad("Invalid emission expression.");
+    if (width.keys[0][0] !== 0 || width.keys.at(-1)[0] !== 1) fail("curve_ends", ["width"]);
+    if (!["view_model", "world"].includes(c.firstPersonSpace)) fail("render");
+    if (typeof c.emitCondition !== "string" || !c.emitCondition.trim() || c.emitCondition.length > 2e3) fail("condition");
     parseExpression(c.emitCondition);
-    if (typeof c.texture !== "string" || c.texture.includes("..") || c.texture.includes(":")) bad("Invalid texture path.");
     return c;
   }
 
@@ -2811,7 +2893,7 @@
     try {
       return JSON.parse(text.replace(/^\uFEFF/, ""));
     } catch {
-      throw new Error(`Invalid JSON: ${label}`);
+      fail("json", [label]);
     }
   }
   var descriptionOf = (r) => r.value["minecraft:attachable"].description;
@@ -2823,12 +2905,12 @@
       r.json.set(path, v);
       const d = v["minecraft:attachable"]?.description;
       if (d) {
-        if (r.attachables.has(d.identifier)) throw new Error(`Duplicate attachable: ${d.identifier}`);
+        if (r.attachables.has(d.identifier)) fail("duplicate_attachable", [d.identifier]);
         r.attachables.set(d.identifier, { file: path, value: v });
       }
       for (const g of v["minecraft:geometry"] ?? []) {
         const id = g.description.identifier;
-        if (r.geometries.has(id)) throw new Error(`Duplicate geometry: ${id}`);
+        if (r.geometries.has(id)) fail("duplicate_geometry", [id]);
         r.geometries.set(id, g);
         r.geometryFiles.set(id, path);
       }
@@ -2839,14 +2921,14 @@
   async function importPacks(data) {
     const found = [], budget = { bytes: 0, count: 0 };
     async function walk(data2, depth = 0, label = "") {
-      if (depth > 2) throw new Error("Archive nesting exceeds two levels.");
+      if (depth > 2) fail("archive_depth");
       const zip = await import_jszip.default.loadAsync(data2), files = /* @__PURE__ */ new Map();
       for (const e of Object.values(zip.files)) {
         if (e.dir) continue;
         const p = e.unsafeOriginalName ?? e.name;
-        if (p.startsWith("/") || p.includes("\\") || p.includes(":") || p.split("/").some((s) => s === ".." || !s)) throw new Error(`Invalid archive path: ${p}`);
+        if (p.startsWith("/") || p.includes("\\") || p.includes(":") || p.split("/").some((s) => s === ".." || !s)) fail("archive_path", [p]);
         budget.bytes += e._data?.uncompressedSize ?? 0;
-        if (++budget.count > 2e4 || budget.bytes > 256 * 1024 * 1024) throw new Error("Archive exceeds 256 MB or 20,000 entries.");
+        if (++budget.count > 2e4 || budget.bytes > 256 * 1024 * 1024) fail("archive_size");
         files.set(e.name, await e.async("uint8array"));
       }
       const roots = [];
@@ -2861,12 +2943,12 @@
       }
       if (!roots.length && [...files.keys()].some((p) => p.startsWith("attachables/"))) {
         const r = indexResources(files);
-        if (r.attachables.size) found.push({ name: label || "Resource Pack", resources: r });
+        if (r.attachables.size) found.push({ name: label, resources: r });
       }
       for (const [p, b] of files) if (/\.(mcpack|zip|mcaddon)$/i.test(p)) await walk(b, depth + 1, p);
     }
     await walk(data);
-    if (!found.length) throw new Error("No resource packs with attachables were found.");
+    if (!found.length) fail("no_attachables");
     return found;
   }
 
@@ -2905,13 +2987,6 @@
   var when = (cond, yes, no = []) => ({ kind: "if", cond: String(cond), yes: [yes].flat(Infinity), no: [no].flat(Infinity) });
   var loop = (count, body) => ({ kind: "loop", count: String(count), body: [body].flat(Infinity) });
   var flat = (...nodes) => nodes.flat(Infinity).filter(Boolean);
-  function num(n) {
-    if (!Number.isFinite(n)) throw new Error("non-finite constant " + n);
-    let s = (Math.abs(n) < 1e-9 ? 0 : n).toFixed(5).replace(/0+$/, "").replace(/\.$/, "");
-    if (s === "-0") s = "0";
-    s = s.replace(/^(-?)0\./, "$1.");
-    return n < 0 ? `(${s})` : s;
-  }
   function toMolang(nodes) {
     const out = [];
     for (const node of flat(nodes)) {
@@ -2972,7 +3047,7 @@
 
   // src/core/runtime.js
   function createRuntime(config, names) {
-    const SEGMENTS = Math.ceil(config.lifetime / config.sampleInterval), INTERVAL = config.sampleInterval, LIFETIME = config.lifetime;
+    const SEGMENTS = segmentCount(config), INTERVAL = config.sampleInterval, LIFETIME = config.lifetime;
     const AX = ["x", "y", "z"], ENDS = ["a", "b"];
     const slots = ["live", ...Array.from({ length: SEGMENTS }, (_, i) => "h" + i)];
     const point = (slot, end, a) => `v.st_${slot}_${end}${a}`;
@@ -2986,6 +3061,7 @@
         ...["ready", "warm", "active", "attack", "previous_attack", "fp", "previous_fp", "emit", "previous_emit", "acc", "stamp", "frame"].map((k) => set("v.st_" + k, 0)),
         set("v.st_last_time", -1),
         set("v.st_bone_clock", 1e4),
+        AX.map((a) => [set("v.st_units_" + a, 0.9375 / 16), set("v.st_previous_units_" + a, 0.9375 / 16)]),
         ...["x", "y", "z", "yaw", "pitch"].map((a) => set("v.st_owner_" + a, 0)),
         slots.map((s) => [set(age(s), LIFETIME + 1), ENDS.map((e) => AX.map((a) => set(point(s, e, a), 0)))]),
         Array.from({ length: SEGMENTS * 2 }, (_, i) => [
@@ -3001,7 +3077,7 @@
       return [
         set("t.base", `q.bone_orientation_trs('${names.a}')`),
         set("t.tip", `q.bone_orientation_trs('${names.b}')`),
-        set("t.root", `q.bone_orientation_trs('${config.root}')`),
+        set("t.root", `q.bone_orientation_trs('${names.root}')`),
         set("t.ca", "math.cos(t.root.r.x)"),
         set("t.sa", "-math.sin(t.root.r.x)"),
         set("t.cb", "math.cos(t.root.r.y)"),
@@ -3020,9 +3096,11 @@
         set("t.yaw", config.firstPersonSpace === "world" ? "v.st_fp?q.camera_rotation(1):(q.is_riding?q.head_y_rotation(0)-q.target_y_rotation:q.body_y_rotation)" : "q.is_riding?q.head_y_rotation(0)-q.target_y_rotation:q.body_y_rotation"),
         set("t.pitch", config.firstPersonSpace === "world" ? "v.st_fp?q.camera_rotation(0):0" : "0"),
         set("t.reset", "!v.st_ready||v.st_previous_fp!=v.st_fp||q.life_time-v.st_last_time>0.15||q.life_time<v.st_last_time"),
-        // Reset on teleports; never connect an old trail to a different location.
-        set("t.displacement", AX.map((a) => `(t.pos${a}-v.st_owner_${a})*(t.pos${a}-v.st_owner_${a})`).join("+")),
-        when(`t.displacement>${config.teleportDistance ** 2}`, set("t.reset", 1)),
+        // Position discontinuity heuristic; enabled trails may bridge the jump.
+        config.teleportTrail ? [] : [
+          set("t.displacement", AX.map((a) => `(t.pos${a}-v.st_owner_${a})*(t.pos${a}-v.st_owner_${a})`).join("+")),
+          when(`t.displacement>${DISCONTINUITY_DISTANCE ** 2}`, set("t.reset", 1))
+        ],
         when("t.reset", [clear(), set("v.st_ready", 1), set("t.dt", 0)]),
         // Third person: bring earlier points into the current actor model frame.
         // Yaw and the model/world Z flip match ClothPhysics / Simple Ragdoll.
@@ -3037,18 +3115,19 @@
           set("t.sy", "math.sin(t.yaw)"),
           set("t.cd", "math.cos(v.st_owner_yaw-t.yaw)"),
           set("t.sd", "math.sin(v.st_owner_yaw-t.yaw)"),
-          AX.map((a) => set("t.d" + a, `(v.st_owner_${a}-t.pos${a})*${num(16 / config.worldScale)}`)),
+          AX.map((a) => set("t.d" + a, `v.st_owner_${a}-t.pos${a}`)),
           set("t.ox", "t.cy*t.dx+t.sy*t.dz"),
           set("t.oz", "t.sy*t.dx-t.cy*t.dz"),
           slots.map((s) => ENDS.map((e) => [
-            set("t.x", point(s, e, "x")),
-            set("t.y", "t.cp0*" + point(s, e, "y") + "+t.sp0*" + point(s, e, "z")),
-            set("t.z", "-t.sp0*" + point(s, e, "y") + "+t.cp0*" + point(s, e, "z")),
+            AX.map((a) => set("t.scaled_" + a, `${point(s, e, a)}*v.st_previous_units_${a}`)),
+            set("t.x", "t.scaled_x"),
+            set("t.y", "t.cp0*t.scaled_y+t.sp0*t.scaled_z"),
+            set("t.z", "-t.sp0*t.scaled_y+t.cp0*t.scaled_z"),
             set("t.y", "t.y+t.dy"),
             set("t.nz", "-t.sd*t.x+t.cd*t.z+t.oz"),
-            set(point(s, e, "x"), "t.cd*t.x+t.sd*t.z+t.ox"),
-            set(point(s, e, "y"), "t.cp1*t.y-t.sp1*t.nz"),
-            set(point(s, e, "z"), "t.sp1*t.y+t.cp1*t.nz")
+            set(point(s, e, "x"), "(t.cd*t.x+t.sd*t.z+t.ox)/v.st_units_x"),
+            set(point(s, e, "y"), "(t.cp1*t.y-t.sp1*t.nz)/v.st_units_y"),
+            set(point(s, e, "z"), "(t.sp1*t.y+t.cp1*t.nz)/v.st_units_z")
           ]))
         ]),
         slots.map((s) => set(age(s), `math.min(${age(s)}+t.dt,${LIFETIME + 1})`)),
@@ -3086,6 +3165,7 @@
         AX.map((a) => set("v.st_owner_" + a, "t.pos" + a)),
         set("v.st_owner_yaw", "t.yaw"),
         set("v.st_owner_pitch", "t.pitch"),
+        AX.map((a) => set("v.st_previous_units_" + a, "v.st_units_" + a)),
         set("v.st_previous_emit", "v.st_emit"),
         set("v.st_previous_attack", "v.st_attack"),
         set("v.st_previous_fp", "v.st_fp"),
@@ -3165,8 +3245,7 @@
         set(field(i, "sx"), 0),
         set(field(i, "sy"), 0),
         when(`v.st_active&&v.st_ready&&${age(newer)}<${LIFETIME}&&${age(older)}<${LIFETIME}`, [
-          // Taper old cross-sections about their centres, so the tail vanishes
-          // continuously without using separate render controllers per segment.
+          // Taper old cross-sections about the configured anchor.
           ...[[newer, "a", "b"], [older, "c", "d"]].map(([slot, aName, bName]) => [
             set("t.width", curveMolang(config.width, `math.clamp(${age(slot)}/${LIFETIME},0,1)`)),
             AX.map((a) => [
@@ -3202,12 +3281,57 @@
   }
 
   // src/assets.js
-  var triangle = Uint8Array.from(atob("iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAkFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+WABnwAAAAMHRSTlMA//z38ezm4dvV0MrFv7q0r6mknpiTjYiCfXdybGdhW1ZQS0VAOjUvKiQeGRMOCAPwGkhtAAABeUlEQVR42u3OBW4DURDA0LjMzMwM979duU3Shb9SZqxK9QX8er0/Hth/WWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNgBkgQ0AWWADQBbYAJAFNmBs5HUEjI+8bv+JgDoBJgPq8p8KqQNgOqTy/0xQxYDZoEr/c2EVAubDKvsvBFYEWAys5L8UWgFgObT2/0pwrYDV4Nr+a+G1ANbDa/5vJNQI2Eyo6b+VUgNgO6X6/05StYDdpOr+e2nVAPbTqv4fJFYJOEys6n+UWgXgOLXf/5PkfgFOkxv+n6U3BDhPb/B/ITQAuBTq/18p9QGulX7+N1LfgFupr/+d1ifgXuvj/yD2DngUe/s/qb0CntV6/70ADMT2Vqi/8bQAAAAASUVORK5CYII="), (c) => c.charCodeAt(0));
+  var trailGradient = Uint8Array.from(atob("iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAFA0lEQVR42u2b22+URQBHS6/YAqWArRWwpGAJFykBClQFJWBEA4pgRAiYgAghEEIIN4kSg5EoRhQjISGAXNR/89gmv026twQeZzkP5+Vrdx/2nJ35ZubbNqANmA0sASaBQ8BV4E/gGfCfFM2zuLwat5NxPe28rc0ADMAADMAADMAADMAADMAADMAADMAADMAADMAADMAADMAP0ADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAMQAxADEAAzAAAzAAAzAAAzghQN4CvwrRfP0RQLYCnwJXAHuAE+Af6RonsTllbjd+jwBXAb+AB5nCJFyeRyXl58ngC3AQeAS8DvwKAVJuTyKy0txu6VZAIvzxy+Ai8BvU//4APhbiuZBXF6M2y1xXRVATy5uBj4HLgC/AveBh1I09+PyQtxujuue2gBeByaAA8D5qUJ+Bu7lDaRc7sXl+bidiOuGAWwCPgPOATeBu3kDKZe7cXkubjc1C2AY2AjsA84CP2b58JcUzZ24PBu3G+O6YQAbgE+A01PXfwBu5w2kXG7H5em43dAsgNeA9cAe4CTwPXArd5BSLrfi8mTcro/rqgC6p+aLIWAc+Bg4AXybueMXKZqbcXkibsfjurtRAOuAD4Fj2Ti4AfwkRXMjLo/F7bpmAQwCa4EPgKNZN17P/CHlcj0uj8bt2riuC+BVYA2wEzicZcM14DspmmtxeThu18R1XQCLgFXA+9kzPp2h44oUzaW4PBi3q+K6KoCuXFwJbM+O0TfZPbogRXM+Lg/E7cq47qoNYCEwBryTDYPpm4YzGT6kXM7E5b64HYvrugAWACtyXjy9XjwCnMrwIeVyKi73xO2KuK4LYAAYzWHB7jw8cBz4WormeFzujtvRuK4KoBOYDyzLXvGuzBnT5XwlRXMkLnfF7bK47qwNoB8YyVbhDuDT3DkekqI5GJc74nYkrusCmAcsBd4CtmXbcH8eIpBy2R+X2+J2aVzXBTA3T4qszqPD07tGe1OPlMveuJyM28VxXRVARy4OZ504kSFj+sbhIyma3XE5EbfDcd1RG8CcHBK8mTPjd7N1uEuKZmdcbojbobiuC6AvhwSjOTHamp2j96RotsflurgdjOu6AHqzRTiSuWJj5o23pWgm43J13C6K67oAXskO0dLMFeN5gHBCimZTXK6M2wVxXRVAe34oMJAnRpfn2HA8a0cpl/G4XB63A3HdXhtATzYIhrJbNJYXrpWiWROXy+K2P64bBjA3DwssyQ3DWIYOKZexuFwSt3ObBdCd5cHCrBVH8sLlUjSjcTkct3PiuiqAWTkd6s1BwWB2jN6QlmBxnM6P4644rwqgM3eH81LKUG4apHyG4nReHHc2C2B2hoj5WS8OSkuwKE7nxHHDADoyN/SmlIFUI+UzEKe9cdzRLICuFNKXF/SnHCmX/rjsi9uuZgG0Z2joyTzRlyFDyqcvTnviuL02gMpSsDIKVCLolZagIr/y7W+veJ8ZwMxRoCtzRY+0BN1xWvXtbxZAx4wIpHXonPHtbxpAJYJKCNI6tM+Q3zCAmRHMDEFag1m18hsF0CgEaR3qXDcLQF4S/BBecv4Hyi6iXZKrfXMAAAAASUVORK5CYII="), (c) => c.charCodeAt(0));
+
+  // src/core/ribbon.js
+  var triangleVertices = [[0, 0.5, 0], [-0.5, -0.5, 0], [0.5, -0.5, 0]];
+  var segmentUvs = (newer, older) => [
+    [[0, newer], [1, newer], [0, older]],
+    [[1, newer], [1, older], [0, older]]
+  ];
+
+  // src/core/space.js
+  function modelSpaceSetup(resources, attachable, id) {
+    let player;
+    for (const [path, bytes] of resources.files) {
+      if (!/^entity\/.+\.json$/i.test(path)) continue;
+      const doc = parseJson(typeof bytes === "string" ? bytes : new TextDecoder().decode(bytes), path);
+      const d = doc["minecraft:client_entity"]?.description;
+      if (d?.identifier === "minecraft:player") {
+        player = d;
+        break;
+      }
+    }
+    const vector = (value) => Array.isArray(value) ? value : [value, value, value];
+    const ownerScale = vector(player ? player.scripts?.scale ?? 1 : 0.9375);
+    const localScale = vector(attachable.scripts?.scale ?? 1);
+    const statements = [], reads = /* @__PURE__ */ new Map();
+    const owner = (n) => {
+      if ((n.kind === "read" || n.kind === "call") && n.path[0] !== "math") {
+        const key = printExpression(n);
+        if (!reads.has(key)) {
+          const name = `t.${id}_scale_read${reads.size}`;
+          reads.set(key, name);
+          const value = n.kind === "call" ? { ...n, args: n.args.map(owner) } : n;
+          statements.push(`${name}=c.owning_entity->${printExpression(value)};`);
+        }
+        return { kind: "read", path: reads.get(key).split(".") };
+      }
+      if (n.kind === "unary") return { ...n, value: owner(n.value) };
+      if (n.kind === "binary") return { ...n, left: owner(n.left), right: owner(n.right) };
+      if (n.kind === "if") return { ...n, test: owner(n.test), yes: owner(n.yes), no: owner(n.no) };
+      if (n.kind === "call") return { ...n, args: n.args.map(owner) };
+      return n;
+    };
+    const expression = (value) => parseExpression(typeof value === "string" ? value.trim().replace(/^return\s+/i, "").replace(/;\s*$/, "") : value);
+    const scales = ownerScale.map((v, i) => ({ owner: printExpression(owner(expression(v))), local: printExpression(expression(localScale[i])) }));
+    const units = `t.${id}_actor_units`, size = `t.${id}_client_size`;
+    return statements.join("") + `${units}=c.owning_entity->q.model_scale;${units}=${units}??0.0625;${units}=${units}>0?${units}:0.0625;` + scales.map((s, i) => `${size}=(${s.owner})*(${s.local});v.${id}_units_${"xyz"[i]}=${units}*(math.abs(${size})>0.00001?${size}:1);`).join("");
+  }
 
   // src/export.js
   var encode = (v) => new TextEncoder().encode(JSON.stringify(v, null, 2) + "\n");
   var materialPath = "materials/entity.material";
-  var base64 = (bytes) => btoa(Array.from(bytes, (b) => String.fromCharCode(b)).join(""));
   var hash = (s) => {
     let h = 2166136261;
     for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
@@ -3217,113 +3341,119 @@
   function unwrapResources(resources) {
     const meta = resources.json.get("simple_trail/project.json");
     if (!meta) return resources;
-    if (meta.format_version !== 1 || !Array.isArray(meta.files) || !meta.originals) throw new Error("Invalid generated trail metadata.");
+    if (meta.format_version !== 1 || !Array.isArray(meta.files) || !meta.originals) fail("generated_meta");
     const files = new Map(resources.files);
     for (const p of meta.files) {
-      if (!/^(models\/entity|animations|animation_controllers|render_controllers|materials|textures)\/simple_trail\//.test(p) || p.includes("..")) throw new Error("Invalid generated resource path.");
+      if (!/^(models\/entity|animations|animation_controllers|render_controllers|materials|textures)\/simple_trail\//.test(p) || p.includes("..")) fail("generated_path", [p]);
       files.delete(p);
     }
     for (const [p, v] of Object.entries(meta.originals)) {
-      if (!/^attachables\/.+\.json$/.test(p) || p.includes("..")) throw new Error("Invalid attachable backup.");
+      if (!/^attachables\/.+\.json$/.test(p) || p.includes("..")) fail("attachable_backup", [p]);
       files.set(p, encode(v));
     }
     if (Object.hasOwn(meta, "materialBackup")) {
       if (meta.materialBackup === null) files.delete(materialPath);
       else if (typeof meta.materialBackup === "string") files.set(materialPath, Uint8Array.from(atob(meta.materialBackup), (c) => c.charCodeAt(0)));
-      else throw new Error("Invalid material backup.");
+      else fail("material_backup");
     }
     files.delete("simple_trail/project.json");
     const clean = indexResources(files);
-    clean.savedConfigs = clone(meta.configs);
+    clean.savedConfigs = meta.configs.map(normalize);
     for (const [id, model] of Object.entries(meta.models ?? {})) if (clean.geometries.has(id)) clean.geometries.set(id, clone(model));
     return clean;
   }
   function generate(resources, configs) {
-    if (!resources.json.get("manifest.json")?.modules?.some((m) => m.type === "resources")) throw new Error("Export requires a resource pack manifest.json. Include it in the imported archive.");
-    const files = new Map(resources.files), written = [], originals = {}, models = {};
-    const materialBytes = files.get(materialPath), materialDoc = materialBytes ? parseJson(new TextDecoder().decode(materialBytes), materialPath) : { materials: { version: "1.0.0" } };
-    if (!materialDoc.materials || typeof materialDoc.materials !== "object" || Array.isArray(materialDoc.materials)) throw new Error("Invalid materials/entity.material.");
-    const addMaterial = (key, value) => {
-      const name = key.split(":")[0];
-      if (Object.keys(materialDoc.materials).some((k) => k.split(":")[0] === name)) throw new Error(`Material name already exists: ${name}`);
-      materialDoc.materials[key] = value;
-    };
+    const files = new Map(resources.files), written = [], originals = {}, models = {}, savedConfigs = [];
+    const originalMaterial = files.get(materialPath);
+    const materialDoc = originalMaterial ? parseJson(new TextDecoder().decode(originalMaterial), materialPath) : { materials: { version: "1.0.0" } };
     const write = (p, v) => {
-      if (files.has(p)) throw new Error(`Generated path already exists: ${p}`);
+      if (files.has(p)) fail("generated_exists", [p]);
       files.set(p, v instanceof Uint8Array ? v : encode(v));
       written.push(p);
     };
     const seen = /* @__PURE__ */ new Set();
     for (const input of configs) {
       const record = resources.attachables.get(input.attachable);
-      if (!record) throw new Error(`Missing attachable: ${input.attachable}`);
-      if (seen.has(input.attachable)) throw new Error("Configure one query geometry per attachable.");
+      if (!record) fail("missing_attachable", [input.attachable]);
+      if (seen.has(input.attachable)) fail("one_geometry");
       seen.add(input.attachable);
       const source = descriptionOf(record), geometry = resources.geometries.get(source.geometry?.[input.geometry]);
-      if (!geometry) throw new Error(`Missing geometry: ${input.geometry}`);
-      const c = validate(input, geometry), id = resourceKey(c), N = Math.ceil(c.lifetime / c.sampleInterval), names = { a: id + "_a", b: id + "_b" };
+      if (!geometry) fail("missing_geometry", [input.geometry]);
+      const c = validate(input, geometry), id = resourceKey(c), N = segmentCount(c), names = { a: id + "_a", b: id + "_b", root: referenceRoot(c, geometry) };
       models[geometry.description.identifier] = clone(geometry);
+      savedConfigs.push(c);
       const runtime = createRuntime(c, names);
-      const remap = (value) => typeof value === "string" ? value.replace(/\bv\.st_/g, "v." + id + "_").replace(/\bst_strip/g, id + "_strip") : Array.isArray(value) ? value.map(remap) : value && typeof value === "object" ? Object.fromEntries(Object.entries(value).map(([k, v]) => [remap(k), remap(v)])) : value;
+      const rawBones = runtime.animatedBones(), generatedBones = new Set(Object.keys(rawBones));
+      const remap = (value) => typeof value === "string" ? generatedBones.has(value) ? id + value.slice(2) : value.split(/('(?:\\.|[^'\\])*')/g).map((part, i) => i % 2 ? part : part.replace(/\bv\.st_/g, "v." + id + "_")).join("") : Array.isArray(value) ? value.map(remap) : value && typeof value === "object" ? Object.fromEntries(Object.entries(value).map(([k, v]) => [remap(k), remap(v)])) : value;
       const model = clone(geometry);
       model.description.identifier = "geometry." + id + ".source";
       for (const end of ["a", "b"]) {
-        if (model.bones.some((b) => b.name === names[end])) throw new Error("Marker name collision.");
+        if (model.bones.some((b) => b.name === names[end])) fail("marker_collision");
         model.bones.push({ name: names[end], parent: c.points[end].bone, pivot: c.points[end].position });
       }
       write(`models/entity/simple_trail/${id}.source.geo.json`, { format_version: "1.16.0", "minecraft:geometry": [model] });
-      const root = clone(geometry.bones.find((b) => b.name === c.root));
+      const root = clone(geometry.bones.find((b) => b.name === names.root));
       delete root.cubes;
+      delete root.poly_mesh;
       delete root.texture_meshes;
       delete root.locators;
       const pivot = root.pivot ?? [0, 0, 0];
       const ribbon = { description: { identifier: "geometry." + id + ".ribbon", texture_width: 16, texture_height: 16, visible_bounds_width: 16, visible_bounds_height: 16, visible_bounds_offset: [0, 0, 0] }, bones: [root] };
       for (let i = 0; i < N * 2; i++) {
-        const n = id + "_strip" + i;
-        ribbon.bones.push({ name: n, parent: c.root, pivot: clone(pivot) }, { name: n + "_scale", parent: n, pivot: clone(pivot) }, { name: n + "_mesh", parent: n + "_scale", pivot: clone(pivot), cubes: [{ origin: [pivot[0] - 0.5, pivot[1] - 0.5, pivot[2]], size: [1, 1, 0], uv: { north: { uv: [0, 0], uv_size: [16, 16] } } }] });
+        const n = id + "_strip" + i, s = i >> 1;
+        const uv = s === 0 ? segmentUvs(0, 1) : segmentUvs((s - 1) * c.sampleInterval / c.lifetime, s * c.sampleInterval / c.lifetime);
+        ribbon.bones.push({ name: n, parent: names.root, pivot: clone(pivot) }, { name: n + "_scale", parent: n, pivot: clone(pivot) }, { name: n + "_mesh", parent: n + "_scale", pivot: clone(pivot), poly_mesh: {
+          normalized_uvs: true,
+          positions: triangleVertices.map((v) => v.map((x, k) => x + pivot[k])),
+          normals: [[0, 0, 1]],
+          uvs: uv[i % 2].map(([u, v]) => [u, 1 - v]),
+          polys: [[[0, 0, 0], [1, 0, 1], [2, 0, 2], [0, 0, 0]]]
+        } });
       }
       write(`models/entity/simple_trail/${id}.ribbon.geo.json`, { format_version: "1.21.0", "minecraft:geometry": [ribbon] });
-      const capture = remap(toMolang(runtime.captureNodes())), initialize = remap(toMolang(runtime.initialize())), bones = remap(runtime.animatedBones());
-      for (const s of [capture, initialize, remap(runtime.preAnimation), ...Object.values(bones).flatMap((b) => Object.values(b).flat())]) if (typeof s === "string") {
+      const capture = remap(toMolang(runtime.captureNodes())), initialize = remap(toMolang(runtime.initialize())), bones = remap(rawBones);
+      const preAnimation = remap(runtime.preAnimation) + `v.${id}_active?{${modelSpaceSetup(resources, source, id)}};`;
+      for (const s of [capture, initialize, preAnimation, ...Object.values(bones).flatMap((b) => Object.values(b).flat())]) if (typeof s === "string") {
         checkMolang(s, id);
-        if (s.length > 61500) throw new Error("A Molang expression exceeds 61,500 characters. Reduce sampling density or curve keys.");
+        if (s.length > 61500) fail("molang_size");
       }
       write(`animations/simple_trail/${id}.json`, { format_version: "1.10.0", animations: { ["animation." + id + ".display"]: { loop: true, bones } } });
       write(`animation_controllers/simple_trail/${id}.json`, { format_version: "1.10.0", animation_controllers: { ["controller.animation." + id + ".capture"]: { initial_state: "a", states: { a: { transitions: [{ b: "1" }], on_exit: [capture] }, b: { transitions: [{ a: "1" }], on_exit: [capture] } } } } });
       const doc = clone(record.value), d = doc["minecraft:attachable"].description;
       originals[record.file] = clone(record.value);
       d.geometry[c.geometry] = model.description.identifier;
-      if (d.geometry[id] || d.animations?.[id + "_display"] || d.materials?.[id]) throw new Error("Generated alias collision.");
+      if (d.geometry[id] || d.animations?.[id + "_display"] || d.materials?.[id]) fail("alias_collision");
       d.geometry[id] = ribbon.description.identifier;
       d.queryable_geometry = c.geometry;
       d.animations = { ...d.animations, [id + "_display"]: "animation." + id + ".display", [id + "_capture"]: "controller.animation." + id + ".capture" };
       d.scripts ??= {};
-      for (const k of ["initialize", "pre_animation", "animate"]) if (d.scripts[k] !== void 0 && !Array.isArray(d.scripts[k])) throw new Error(`Expected scripts.${k} to be an array.`);
+      for (const k of ["initialize", "pre_animation", "animate"]) if (d.scripts[k] !== void 0 && !Array.isArray(d.scripts[k])) fail("scripts_array", [k]);
       d.scripts.initialize = [...d.scripts.initialize ?? [], initialize];
-      d.scripts.pre_animation = [...d.scripts.pre_animation ?? [], remap(runtime.preAnimation)];
+      d.scripts.pre_animation = [...d.scripts.pre_animation ?? [], preAnimation];
       d.scripts.animate = [...d.scripts.animate ?? [], id + "_display", id + "_capture"];
-      const texturePath = c.texture.replace(/\.png$/i, "") || "textures/simple_trail/" + id;
-      if (c.texture && !resources.files.has(texturePath + ".png")) throw new Error(`Missing trail texture: ${texturePath}.png`);
-      if (!c.texture) write(texturePath + ".png", triangle);
+      const texturePath = "textures/simple_trail/" + id;
+      write(texturePath + ".png", trailGradient);
+      const materialName = id + "_ribbon";
+      if (Object.keys(materialDoc.materials).some((k) => k.split(":")[0] === materialName)) fail("alias_collision");
+      materialDoc.materials[materialName + ":entity_emissive"] = { "+states": ["Blending", "DisableCulling", "DisableDepthWrite"], "+defines": ["USE_UV_ANIM"], "-defines": ["FANCY"], blendSrc: "SourceAlpha", blendDst: "OneMinusSrcAlpha", "+samplerStates": [{ samplerIndex: 0, textureFilter: "Bilinear", textureWrap: "Clamp" }] };
       d.textures = { ...d.textures, [id]: texturePath };
-      d.materials = { ...d.materials, [id]: id + "_ribbon" };
-      addMaterial(id + "_base:" + (c.unlit ? "entity_emissive" : "entity"), { "+states": ["Blending", "DisableCulling", "DisableDepthWrite"], "+defines": ["USE_UV_ANIM"], "-defines": ["FANCY"], blendSrc: "One", blendDst: c.blend === "additive" ? "One" : "OneMinusSourceAlpha" });
-      addMaterial(id + "_repeat:" + id + "_base", { blendSrc: "SourceAlpha", "+samplerStates": [{ samplerIndex: 0, textureWrap: "Repeat" }] });
-      addMaterial(id + "_ribbon:" + id + "_repeat", { "+samplerStates": [{ samplerIndex: 0, textureFilter: "Bilinear" }] });
-      const color = c.color.match(/\w\w/g).map((h) => parseInt(h, 16) / 255), controllers = {};
-      const variableAlpha = c.opacity.keys.some((k) => k[1] !== c.opacity.keys[0][1]);
-      for (let s = 0; s < (variableAlpha ? N : 1); s++) {
-        const age = s === 0 ? "live" : "h" + (s - 1), controller2 = "controller.render." + id + ".segment" + s;
-        const alpha = `(${c.opacity.value})*(${curveMolang(c.opacity, `math.clamp((v.${id}_${age}_age??${c.lifetime})/${c.lifetime},0,1)`)})`;
-        const visibility = Array.from({ length: N * 2 }, (_, i) => ({ [id + "_strip" + i + "_mesh"]: !variableAlpha || i >> 1 === s ? `(v.${id}_active??0)&&(v.${id}_ready??0)` : false }));
-        controllers[controller2] = { geometry: "Geometry." + id, rebuild_animation_matrices: true, materials: [{ "*": "Material." + id }], textures: ["Texture." + id], part_visibility: visibility, color: { r: color[0], g: color[1], b: color[2], a: alpha }, ignore_lighting: c.unlit };
-        d.render_controllers = [...d.render_controllers ?? [], controller2];
+      d.materials = { ...d.materials, [id]: materialName };
+      const active = `(v.${id}_active??0)&&(v.${id}_ready??0)`, live = `math.clamp((v.${id}_live_age??0)/${c.lifetime},0,1)`, history = `math.clamp((v.${id}_h0_age??0)/${c.lifetime},0,1)`;
+      const controllers = {};
+      for (let pass = 0; pass < Math.min(N, 2); pass++) {
+        const visibility = [{ "*": false }, ...Array.from({ length: pass ? (N - 1) * 2 : 2 }, (_, j) => ({ [id + "_strip" + (pass ? j + 2 : j) + "_mesh"]: active }))];
+        controllers["controller.render." + id + ".segment" + pass] = { geometry: "Geometry." + id, rebuild_animation_matrices: true, materials: [{ "*": "Material." + id }], textures: ["Texture." + id], part_visibility: visibility, uv_anim: { offset: [0, pass ? history : live], scale: [1, pass ? 1 : `math.max(0,${history}-${live})`] } };
       }
+      d.render_controllers = [...d.render_controllers ?? [], ...Object.keys(controllers)];
       write(`render_controllers/simple_trail/${id}.json`, { format_version: "1.8.0", render_controllers: controllers });
       files.set(record.file, encode(doc));
     }
-    files.set(materialPath, encode(materialDoc));
-    files.set("simple_trail/project.json", encode({ format_version: 1, configs: clone(configs), files: written, originals, models, materialBackup: materialBytes ? base64(materialBytes) : null }));
+    const materialMeta = {};
+    if (configs.length) {
+      files.set(materialPath, encode(materialDoc));
+      materialMeta.materialBackup = originalMaterial ? btoa(Array.from(originalMaterial, (b) => String.fromCharCode(b)).join("")) : null;
+    }
+    files.set("simple_trail/project.json", encode({ format_version: 1, configs: savedConfigs, files: written, originals, models, ...materialMeta }));
     return { files, generated: written };
   }
   async function exportPack(resources, configs) {
@@ -3345,12 +3475,15 @@
       this.acc = 0;
       this.emitting = false;
       this.time = 0;
+      this.owner = null;
     }
-    update(dt, a, b, emit = true) {
+    update(dt, a, b, emit = true, owner) {
       const c = this.config;
       dt = Math.max(0, dt);
       if (dt > 0.15) this.reset();
       this.time += dt;
+      if (!c.teleportTrail && owner && this.owner && Math.hypot(...owner.map((v, i) => v - this.owner[i])) > DISCONTINUITY_DISTANCE) this.reset();
+      this.owner = owner ? [...owner] : null;
       if (emit) {
         if (!this.live || !this.emitting) {
           this.samples = [];
@@ -3366,7 +3499,7 @@
           }
           const total = this.acc + dt;
           this.acc = Math.max(0, total - Math.floor((total + 1e-8) / c.sampleInterval) * c.sampleInterval);
-          this.samples.length = Math.min(this.samples.length, Math.ceil(c.lifetime / c.sampleInterval));
+          this.samples.length = Math.min(this.samples.length, segmentCount(c));
           this.live = { a: [...a], b: [...b], time: this.time };
         }
       }
@@ -3376,12 +3509,12 @@
       const c = this.config, all = [this.live, ...this.samples].filter(Boolean), out = [];
       const shrink = (s) => {
         const u = (this.time - s.time) / c.lifetime, w = curveValue(c.width, u), mid = lerp(s.a, s.b, c.width.anchor);
-        return { a: lerp(mid, s.a, w), b: lerp(mid, s.b, w), alpha: c.opacity.value * curveValue(c.opacity, u), age: u };
+        return { a: lerp(mid, s.a, w), b: lerp(mid, s.b, w), age: u };
       };
       for (let i = 0; i < all.length - 1; i++) {
         const n = shrink(all[i]), o = shrink(all[i + 1]);
         if (n.age >= 1 || o.age >= 1) continue;
-        out.push({ triangles: [[n.a, n.b, o.a], [n.b, o.b, o.a]], alpha: n.alpha });
+        out.push({ triangles: [[n.a, n.b, o.a], [n.b, o.b, o.a]], uvs: segmentUvs(n.age, o.age) });
       }
       return out;
     }
@@ -3421,19 +3554,18 @@
         this.markers[key] = marker;
       }
       this.meshes = [];
-      for (let i = 0; i < Math.ceil(config.lifetime / config.sampleInterval); i++) {
+      for (let i = 0; i < segmentCount(config); i++) {
         const geo = new THREE.BufferGeometry();
         geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(18), 3));
-        geo.setAttribute("uv", new THREE.BufferAttribute(new Float32Array([0.5, 1, 0, 0, 1, 0, 0.5, 1, 0, 0, 1, 0]), 2));
-        const Material = config.unlit ? THREE.MeshBasicMaterial : THREE.MeshLambertMaterial;
-        const mat = new Material({ color: config.color, transparent: true, opacity: config.opacity.value, side: THREE.DoubleSide, depthWrite: false, blending: config.blend === "additive" ? THREE.AdditiveBlending : THREE.NormalBlending });
+        geo.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(12), 2));
+        const mat = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, transparent: true, depthWrite: false, blending: THREE.NormalBlending });
         const mesh = new THREE.Mesh(geo, mat);
         mesh.frustumCulled = false;
         mesh.visible = false;
         this.group.add(mesh);
         this.meshes.push(mesh);
       }
-      const bytes = config.texture ? this.controller.resources?.files.get(config.texture.replace(/\.png$/i, "") + ".png") : triangle;
+      const bytes = trailGradient;
       if (bytes) {
         const url = URL.createObjectURL(new Blob([bytes], { type: "image/png" })), group = this.group;
         new THREE.TextureLoader().load(url, (texture) => {
@@ -3443,8 +3575,9 @@
             return;
           }
           texture.minFilter = texture.magFilter = THREE.LinearFilter;
-          texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+          texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
           texture.generateMipmaps = false;
+          texture.flipY = false;
           this.texture = texture;
           for (const mesh of this.meshes) {
             mesh.material.map = texture;
@@ -3453,11 +3586,6 @@
         }, void 0, () => URL.revokeObjectURL(url));
       }
       this.state = { project: Project };
-      this.updateMarkers();
-    }
-    updateMarkers() {
-      for (const m of Object.values(this.markers)) m.visible = !!this.controller.state.helpers;
-      for (const m of this.meshes ?? []) m.material.wireframe = !!this.controller.state.wireframe;
     }
     start() {
       if (!this.state) this.setup();
@@ -3486,7 +3614,8 @@
       this.wrapper.updateMatrixWorld(true);
       const a = this.markers.a?.getWorldPosition(new THREE.Vector3()), b = this.markers.b?.getWorldPosition(new THREE.Vector3());
       if (a && b) {
-        this.history.update(dt, a.toArray(), b.toArray(), this.controller.state.emit);
+        const owner = this.wrapper.getWorldPosition(new THREE.Vector3()).multiplyScalar(1 / 16).toArray();
+        this.history.update(dt, a.toArray(), b.toArray(), true, owner);
         const segments = this.history.segments();
         this.meshes.forEach((mesh, i) => {
           const s = segments[i];
@@ -3494,8 +3623,8 @@
           if (!s) return;
           mesh.geometry.attributes.position.array.set(s.triangles.flat(2));
           mesh.geometry.attributes.position.needsUpdate = true;
-          if (!mesh.material.isMeshBasicMaterial) mesh.geometry.computeVertexNormals();
-          mesh.material.opacity = s.alpha;
+          mesh.geometry.attributes.uv.array.set(s.uvs.flat(2));
+          mesh.geometry.attributes.uv.needsUpdate = true;
         });
       }
       this.raf = requestAnimationFrame(() => this.tick());
@@ -4703,54 +4832,137 @@
   };
 
   // src/blockbench/dialogs.js
+  var STATUS = { ready: "status_ready", new: "status_new", invalid: "status_invalid" };
+  var openable = (row) => !row.error;
   function browserDialog(controller2) {
     if (controller2.browser) {
       controller2.browser.show();
       return;
     }
     controller2.browser = new Dialog("trail_browser", {
-      title: t("browser"),
-      width: 650,
+      title: t("browser_title"),
+      width: 620,
       component: {
         data: () => ({ s: controller2.state }),
         computed: { rows() {
           const q = this.s.search.toLowerCase();
           return this.s.rows.filter((r) => (r.id + " " + r.alias).toLowerCase().includes(q));
         } },
-        methods: { t, open(r) {
-          controller2.safe(() => controller2.openRow(r));
-        }, enable(r, v) {
-          controller2.setEnabled(r, v);
-        }, importPack() {
-          controller2.choosePack();
-        }, example() {
-          controller2.safe(() => controller2.openExample());
-        }, exportPack() {
-          controller2.safe(() => controller2.export());
-        } },
-        template: `<div class="st-browser"><div class="st-browser-bar"><span class="st-grow st-ellipsis">{{s.packName||t('no_pack')}}</span><button @click="importPack" :disabled="s.busy">{{t('import_pack')}}</button><button @click="example" :disabled="s.busy">Sword Trail</button><button @click="exportPack" :disabled="s.busy||!s.rows.some(r=>r.enabled)">{{t('export_pack')}}</button></div><search-bar v-model="s.search"></search-bar><ul class="st-entity-list" role="listbox"><li v-for="r in rows" :key="r.key" :title="r.error" :class="{selected:s.current===r.key,'st-unavailable':!!r.error}" @click="s.current=r.key" @dblclick="open(r)"><input type="checkbox" :aria-label="t('include_export')+' '+r.id" :title="t('include_export')" :checked="r.enabled" :disabled="!r.configured||!!r.error" @click.stop @dblclick.stop @change="enable(r,$event.target.checked)"><i class="material-icons">sports_martial_arts</i><span class="st-grow">{{r.id}} · {{r.alias}}</span><span>{{r.error?t('unavailable'):r.configured?t('configured'):t('available')}}</span></li></ul><p class="st-note">{{t('browser_tip')}}</p></div>`
+        methods: {
+          t,
+          openable,
+          status(row) {
+            return t(STATUS[row.status]);
+          },
+          pick(row) {
+            this.s.current = row.key;
+          },
+          open(row) {
+            if (openable(row)) controller2.safe(() => controller2.openRow(row));
+          },
+          importPack() {
+            controller2.choosePack();
+          },
+          exportPack() {
+            exportDialog(controller2);
+          }
+        },
+        template: `<div class="st-browser">
+        <div class="st-browser-bar">
+          <i class="material-icons">inventory_2</i>
+          <span class="st-grow st-ellipsis" :title="s.packName">{{ s.packName || t('no_pack') }}</span>
+          <button @click="importPack" :disabled="s.busy">{{ s.packName ? t('replace_pack_button') : t('import_pack_button') }}</button>
+          <button @click="exportPack" :disabled="s.busy || !s.rows.length">{{ t('export_button') }}</button>
+        </div>
+        <search-bar v-model="s.search"></search-bar>
+        <ul class="st-entity-list" role="listbox">
+          <li v-for="row in rows" :key="row.key" role="option" :aria-selected="s.current===row.key" :class="{selected: s.current===row.key, 'st-unavailable': !openable(row)}" :title="row.error" @click="pick(row)" @dblclick="open(row)">
+            <i class="material-icons">{{ openable(row) ? 'timeline' : 'block' }}</i>
+            <div class="st-grow"><div class="st-ellipsis">{{ row.id }}</div><div v-if="row.alias !== 'default' || row.error" class="st-muted st-ellipsis">{{ row.error || row.alias }}</div></div>
+            <span class="st-status" :class="'st-status-'+row.status">{{ status(row) }}</span>
+          </li>
+          <li v-if="!rows.length" class="st-empty">{{ s.packName ? t('no_attachables') : t('no_pack_hint') }}</li>
+        </ul>
+        <div class="st-muted">{{ t('browser_hint') }}</div>
+      </div>`
       },
       buttons: [t("open"), t("close")],
       onConfirm() {
-        const r = controller2.state.rows.find((r2) => r2.key === controller2.state.current);
-        if (!r || r.error) return false;
-        controller2.safe(() => controller2.openRow(r));
+        const row = controller2.state.rows.find((r) => r.key === controller2.state.current);
+        if (!row || !openable(row)) return false;
+        controller2.safe(() => controller2.openRow(row));
       }
     });
     controller2.browser.show();
   }
-
-  // examples/sword_trail.mcpack
-  var sword_trail_default = __toBinary("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");
+  function exportDialog(controller2) {
+    if (!controller2.resources) {
+      Blockbench.showMessageBox({ title: t("export_title"), message: t("error.import_first"), buttons: [t("import_pack_button"), t("cancel")] }, (button) => {
+        if (button === 0) controller2.choosePack();
+      });
+      return;
+    }
+    controller2.safe(() => controller2.syncGeometry());
+    controller2.refresh();
+    const s = controller2.state, rows = s.rows.filter((r) => r.status === "ready").map((r) => ({ key: r.key, id: r.id, alias: r.alias, selected: controller2.enabled.has(r.key) }));
+    new Dialog("trail_export", {
+      title: t("export_title"),
+      width: 540,
+      part_order: ["form", "component"],
+      form: { name: { label: t("pack_name"), type: "text", value: s.packName.replace(/\.(mcpack|mcaddon|zip)$/i, "") + " Trail" } },
+      component: {
+        data: () => ({ rows }),
+        computed: { count() {
+          return this.rows.filter((r) => r.selected).length;
+        } },
+        methods: {
+          t,
+          all(value) {
+            for (const row of this.rows) row.selected = value && !this.rows.some((o) => o !== row && o.id === row.id && o.selected);
+          },
+          // One geometry per attachable: checking an alias unchecks its siblings.
+          toggle(row) {
+            if (row.selected) {
+              for (const o of this.rows) if (o !== row && o.id === row.id) o.selected = false;
+            }
+          }
+        },
+        template: `<div class="st-export">
+        <div class="st-export-bar"><span class="st-grow">{{ t('export_count', [count]) }}</span><a href="#" @click.prevent="all(true)">{{ t('select_all') }}</a><a href="#" @click.prevent="all(false)">{{ t('deselect_all') }}</a></div>
+        <ul class="st-entity-list st-export-list">
+          <li v-for="row in rows" :key="row.key">
+            <label class="st-grow st-check-row"><input type="checkbox" v-model="row.selected" @change="toggle(row)"><span class="st-ellipsis">{{ row.id }}</span><span v-if="row.alias !== 'default'" class="st-muted">{{ row.alias }}</span></label>
+          </li>
+          <li v-if="!rows.length" class="st-empty">{{ t('no_configured') }}</li>
+        </ul>
+      </div>`
+      },
+      buttons: [t("export_confirm"), t("cancel")],
+      onConfirm(result) {
+        const keys = rows.filter((r) => r.selected).map((r) => r.key);
+        if (!result.name.trim() || !keys.length) return false;
+        for (const key of controller2.enabled) controller2.enabled.delete(key);
+        for (const key of keys) controller2.enabled.add(key);
+        controller2.safe(() => controller2.exportPack({ name: result.name.trim(), keys }));
+      }
+    }).show();
+  }
 
   // src/blockbench/controller.js
+  var readAsDataURL = (bytes) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(new Blob([bytes], { type: "image/png" }));
+  });
   var Controller = class {
     constructor() {
       this.resources = null;
       this.configs = /* @__PURE__ */ new Map();
       this.enabled = /* @__PURE__ */ new Set();
       this.browser = null;
-      this.state = { packName: "", rows: [], search: "", current: "", busy: false, configured: false, config: null, bones: [], selected: "a", tool: "move", running: false, emit: true, helpers: true, wireframe: false, error: "", linked: false };
+      this.packKey = "";
+      this.state = { packName: "", rows: [], search: "", current: "", busy: false, configured: false, config: null, bones: [], selected: "root", tool: "move", running: false, error: "", linked: false, custom: false, customFor: "" };
       this.preview = new TrailPreview(this);
       this.gizmo = new Gizmo(this);
     }
@@ -4765,7 +4977,7 @@
     }
     error(e) {
       console.error(e);
-      Blockbench.showMessageBox({ title: t("error"), message: e.message ?? String(e), buttons: [t("close")] });
+      Blockbench.showMessageBox({ title: t("error_title"), message: e.message ?? String(e), buttons: [t("close")] });
     }
     active() {
       return Modes.selected?.id === "trail" && !!Project?.simple_trail?.config;
@@ -4776,15 +4988,31 @@
     key(r) {
       return r.id + "|" + r.alias;
     }
+    model() {
+      return this.data?.model;
+    }
+    // Pack import and the attachable list
+    choosePack() {
+      Blockbench.import({ type: t("pack"), extensions: ["mcpack", "zip", "mcaddon"], readtype: "buffer", resource_id: "simple_trail_pack" }, (files) => {
+        if (files[0]) this.safe(async () => {
+          await this.importFile(files[0]);
+          browserDialog(this);
+        });
+      });
+    }
     async importFile(file) {
       this.state.busy = true;
       try {
         const packs = await importPacks(file.content);
         if (packs.length === 1) this.usePack(packs[0], file.name);
-        else new Dialog("trail_pack_select", { title: t("choose_pack"), form: { pack: { label: t("pack"), type: "select", options: Object.fromEntries(packs.map((p, i) => [i, p.name])), value: "0" } }, onConfirm: (v) => {
-          this.usePack(packs[Number(v.pack)], file.name);
-          browserDialog(this);
-        } }).show();
+        else new Dialog("trail_pack_select", {
+          title: t("choose_pack"),
+          form: { pack: { label: t("pack"), type: "select", options: Object.fromEntries(packs.map((p, i) => [i, p.name || file.name])), value: "0" } },
+          onConfirm: (v) => {
+            this.usePack(packs[Number(v.pack)], file.name);
+            browserDialog(this);
+          }
+        }).show();
       } finally {
         this.state.busy = false;
       }
@@ -4795,21 +5023,18 @@
       this.resources = unwrapResources(pack.resources);
       this.packKey = this.resources.json.get("manifest.json")?.header?.uuid ?? name;
       this.configs = new Map((this.resources.savedConfigs ?? []).map((c) => [c.attachable + "|" + c.geometry, c]));
+      this.enabled = new Set(this.configs.keys());
       this.state.packName = name;
       this.state.rows = [];
-      this.enabled = new Set(this.configs.keys());
-      for (const [id, r] of this.resources.attachables) {
-        const d = descriptionOf(r);
-        for (const [alias, gid] of Object.entries(d.geometry ?? {})) {
-          const model = this.resources.geometries.get(gid);
-          const row = { id, alias, key: id + "|" + alias, geometry: gid, configured: false, enabled: false, error: "" };
-          if (!model?.bones?.length) row.error = t("missing_geometry", [gid]);
-          else {
-            try {
-              validate(this.configs.get(row.key) ?? defaults(id, alias, model), model);
-            } catch (e) {
-              row.error = e.message;
-            }
+      this.state.current = "";
+      for (const [id, record] of this.resources.attachables) {
+        for (const [alias, gid] of Object.entries(descriptionOf(record).geometry ?? {})) {
+          const model = this.resources.geometries.get(gid), row = { id, alias, key: id + "|" + alias, geometry: gid, status: "new", error: "" };
+          if (!model?.bones?.length) row.error = t("error.missing_geometry", [gid]);
+          else try {
+            validate(this.configs.get(row.key) ?? defaults(id, alias, model), model);
+          } catch (e) {
+            row.error = e.message;
           }
           this.state.rows.push(row);
         }
@@ -4824,25 +5049,13 @@
       }
       this.refresh();
     }
-    choosePack() {
-      Blockbench.import({ type: t("pack"), extensions: ["mcpack", "zip", "mcaddon"], readtype: "buffer", resource_id: "simple_trail_pack" }, (files) => {
-        if (files[0]) this.safe(async () => {
-          await this.importFile(files[0]);
-          browserDialog(this);
-        });
-      });
-    }
+    // Each attachable exports one geometry, so enabling one alias disables the others.
     setEnabled(row, enabled) {
       if (row.error || !this.configs.has(row.key)) return;
       if (enabled) {
         for (const other of this.state.rows) if (other.id === row.id) this.enabled.delete(other.key);
         this.enabled.add(row.key);
       } else this.enabled.delete(row.key);
-      for (const r of this.state.rows) r.enabled = this.enabled.has(r.key);
-    }
-    async openExample() {
-      await this.importFile({ name: "Sword Trail.mcpack", content: sword_trail_default });
-      await this.openRow(this.state.rows.find((r) => !r.error));
     }
     async openRow(row) {
       if (!row || row.error) return;
@@ -4851,6 +5064,7 @@
         const existing = ModelProject.all.find((p) => p.simple_trail?.key === row.key && p.simple_trail.packKey === this.packKey);
         if (existing) {
           existing.select();
+          this.setEnabled(row, true);
           Modes.options.trail.select();
           this.refresh();
           this.browser?.hide();
@@ -4868,17 +5082,12 @@
         Project.simple_trail = { packKey: this.packKey, key: row.key, client, model, config };
         this.configs.set(row.key, clone(config));
         this.setEnabled(row, true);
+        this.state.selected = "root";
         const animations = Object.fromEntries(Object.values(client.animations ?? {}).filter((id) => this.resources.animations.has(id)).map((id) => [id, this.resources.animations.get(id)]));
         if (Object.keys(animations).length) (typeof AnimationCodec === "undefined" ? Animator : AnimationCodec.codecs.bedrock).loadFile({ path: "", json: { format_version: "1.10.0", animations } });
         const texPath = Object.values(client.textures ?? {}).find((p) => this.resources.files.has(p + ".png"));
         if (texPath) {
-          const bytes = this.resources.files.get(texPath + ".png"), url = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(new Blob([bytes], { type: "image/png" }));
-          });
-          const texture = new Texture({ name: "texture.png", keep_size: true });
+          const url = await readAsDataURL(this.resources.files.get(texPath + ".png")), texture = new Texture({ name: "texture.png", keep_size: true });
           await new Promise((resolve) => {
             texture.load_callback = resolve;
             texture.img.addEventListener("error", resolve, { once: true });
@@ -4896,9 +5105,7 @@
         this.state.busy = false;
       }
     }
-    model() {
-      return this.data?.model;
-    }
+    // The model of the open project, written back into the pack on export
     syncGeometry() {
       if (!this.data || Format?.id !== "bedrock") return;
       const model = Codecs.bedrock.compile({ raw: true, visible_box: false })["minecraft:geometry"][0];
@@ -4915,25 +5122,28 @@
       if (this.resources && this.data.packKey === this.packKey) this.resources.geometries.set(model.description.identifier, clone(model));
     }
     refresh() {
-      const d = this.data;
-      this.state.configured = !!d;
-      this.state.config = d ? clone(d.config) : null;
-      this.state.bones = d ? d.model.bones.map((b) => b.name) : [];
-      this.state.linked = !!d && this.packKey === d.packKey;
-      this.state.error = "";
+      const d = this.data, state = this.state;
+      if (d) d.config = normalize(d.config);
+      state.configured = !!d;
+      state.config = d ? clone(d.config) : null;
+      state.bones = d ? d.model.bones.map((b) => b.name) : [];
+      state.linked = !!d && this.packKey === d.packKey;
+      state.error = "";
       if (d) {
         try {
           validate(d.config, d.model);
         } catch (e) {
-          this.state.error = e.message;
+          state.error = e.message;
         }
-        if (this.state.linked) this.configs.set(d.key, clone(d.config));
+        if (state.linked) this.configs.set(d.key, clone(d.config));
+        if (state.customFor !== d.key) {
+          state.customFor = d.key;
+          state.custom = false;
+        }
+        if (presetOf(d.config.emitCondition) === "custom") state.custom = true;
       }
-      for (const r of this.state.rows) {
-        r.configured = this.configs.has(r.key);
-        r.enabled = this.enabled.has(r.key);
-      }
-      this.state.running = this.preview.running;
+      for (const r of state.rows) r.status = r.error ? "invalid" : this.configs.has(r.key) ? "ready" : "new";
+      state.running = this.preview.running;
       if (this.active() && !this.gizmo.drag) {
         this.preview.setup();
         this.gizmo.attach();
@@ -4944,39 +5154,52 @@
       this.state.selected = key;
       this.gizmo.attach();
     }
-    change(path, value) {
-      this.safe(() => {
-        const d = this.data;
-        if (!d) return;
-        const config = clone(d.config), parts = path.split(".");
-        let node = config;
-        for (const p of parts.slice(0, -1)) node = node[p];
-        node[parts.at(-1)] = value;
-        validate(config, d.model);
+    // Edits go through one validated, undoable path. Returns false if rejected.
+    edit(mutate, label = t("edit_label")) {
+      const d = this.data;
+      if (!d) return false;
+      try {
+        const config = clone(d.config);
+        mutate(config);
+        const valid = validate(config, d.model);
         const running = this.preview.running;
         Undo.initEdit({ trail: true });
-        d.config = config;
-        Undo.finishEdit(t("edit"));
+        d.config = valid;
+        Undo.finishEdit(label);
         Project.saved = false;
         this.refresh();
         if (running) {
           this.preview.start();
           this.state.running = true;
         }
+        return true;
+      } catch (e) {
+        this.error(e);
+        this.refresh();
+        return false;
+      }
+    }
+    change(path, value) {
+      return this.edit((config) => {
+        const parts = path.split(".");
+        let node = config;
+        for (const p of parts.slice(0, -1)) node = node[p];
+        node[parts.at(-1)] = value;
       });
     }
     setPointBone(key, bone) {
       this.change("points." + key, { bone, position: clone(this.data.model.bones.find((b) => b.name === bone)?.pivot ?? [0, 0, 0]) });
     }
+    // Configuration files
     importConfig() {
       Blockbench.import({ type: t("config"), extensions: ["json"], readtype: "text" }, (files) => {
         if (!files[0]) return;
         this.safe(() => {
           const c = parseJson(files[0].content, files[0].name);
-          if (c.attachable !== this.data.config.attachable || c.geometry !== this.data.config.geometry) throw new Error(t("config_target"));
-          validate(c, this.model());
+          if (c.attachable !== this.data.config.attachable || c.geometry !== this.data.config.geometry) fail("config_target");
+          const valid = validate(c, this.model());
           Undo.initEdit({ trail: true });
-          this.data.config = c;
+          this.data.config = valid;
           Undo.finishEdit(t("import_config"));
           Project.saved = false;
           this.refresh();
@@ -4985,22 +5208,24 @@
     }
     exportConfig() {
       if (!this.data) return;
-      Blockbench.export({ type: t("config"), extensions: ["json"], name: this.data.config.attachable.replace(":", "_") + ".trail", content: JSON.stringify(this.data.config, null, 2) });
+      Blockbench.export({ type: t("config"), extensions: ["json"], name: this.data.config.attachable.replace(":", "_") + ".trail", content: JSON.stringify(normalize(this.data.config), null, 2) });
     }
-    async export() {
+    // keys: configurations to include, one per attachable
+    async exportPack({ name, keys }) {
       this.state.busy = true;
       try {
-        if (!this.resources) throw new Error(t("import_first"));
+        if (!this.resources) fail("import_first");
         this.syncGeometry();
         this.refresh();
-        const configs = [...this.configs].filter(([key]) => this.enabled.has(key)).map(([, c]) => c);
-        if (!configs.length) throw new Error(t("no_config"));
+        const configs = keys.filter((key) => this.configs.has(key)).map((key) => this.configs.get(key));
+        if (!configs.length) fail("no_selection");
         const bytes = await exportPack(this.resources, configs);
-        Blockbench.export({ type: t("pack"), extensions: ["mcpack"], name: this.state.packName.replace(/\.(mcpack|mcaddon|zip)$/i, "") + " Trail", savetype: "zip", content: new Blob([bytes], { type: "application/zip" }) });
+        Blockbench.export({ type: t("pack"), extensions: ["mcpack"], name, savetype: "zip", content: new Blob([bytes], { type: "application/zip" }) });
       } finally {
         this.state.busy = false;
       }
     }
+    // Preview
     play() {
       if (this.preview.running) this.preview.pause();
       else this.preview.start();
@@ -5112,8 +5337,9 @@
   };
 
   // src/blockbench/curve.js
+  var KEY_MIN_GAP = 0.01;
   var CurveEditor = {
-    props: ["value", "maximum", "label"],
+    props: ["value", "maximum", "label", "tip"],
     data() {
       return { draft: null, active: 0 };
     },
@@ -5135,6 +5361,7 @@
         return [Math.max(0, Math.min(1, ((e.clientX - r.left) / r.width * 240 - 12) / 216)), Math.max(0, Math.min(this.maximum, (116 - (e.clientY - r.top) / r.height * 140) / 100 * this.maximum))];
       },
       begin(e, index) {
+        if (e.button !== 0) return;
         e.preventDefault();
         this.active = index;
         this.draft = clone(this.value);
@@ -5143,7 +5370,7 @@
       move(e) {
         if (!this.draft) return;
         const p = this.coords(e), k = this.draft.keys, i = this.active;
-        p[0] = i === 0 ? 0 : i === k.length - 1 ? 1 : Math.max(k[i - 1][0] + 0.01, Math.min(k[i + 1][0] - 0.01, p[0]));
+        p[0] = i === 0 ? 0 : i === k.length - 1 ? 1 : Math.max(k[i - 1][0] + KEY_MIN_GAP, Math.min(k[i + 1][0] - KEY_MIN_GAP, p[0]));
         this.$set(k, i, p);
       },
       finish() {
@@ -5155,16 +5382,16 @@
       add(e) {
         if (this.value.keys.length >= 12) return;
         const p = this.coords(e);
-        if (p[0] <= 0.01 || p[0] >= 0.99 || this.value.keys.some((k) => Math.abs(k[0] - p[0]) < 0.01)) return;
+        if (p[0] <= KEY_MIN_GAP || p[0] >= 1 - KEY_MIN_GAP || this.value.keys.some((k) => Math.abs(k[0] - p[0]) < KEY_MIN_GAP)) return;
         const c = clone(this.value);
         c.keys.push(p);
         c.keys.sort((a, b) => a[0] - b[0]);
         this.$emit("change", c);
       },
-      remove() {
-        if (this.active <= 0 || this.active >= this.value.keys.length - 1) return;
+      remove(i) {
+        if (i <= 0 || i >= this.value.keys.length - 1) return;
         const c = clone(this.value);
-        c.keys.splice(this.active, 1);
+        c.keys.splice(i, 1);
         this.active = 0;
         this.$emit("change", c);
       },
@@ -5172,143 +5399,266 @@
         if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Delete"].includes(e.key)) return;
         e.preventDefault();
         this.active = i;
-        if (e.key === "Delete") return this.remove();
+        if (e.key === "Delete") return this.remove(i);
         const c = clone(this.value), p = c.keys[i];
         if (e.key === "ArrowUp" || e.key === "ArrowDown") p[1] = Math.max(0, Math.min(this.maximum, p[1] + (e.key === "ArrowUp" ? 0.05 : -0.05)));
-        else if (i > 0 && i < c.keys.length - 1) p[0] = Math.max(c.keys[i - 1][0] + 0.01, Math.min(c.keys[i + 1][0] - 0.01, p[0] + (e.key === "ArrowRight" ? 0.01 : -0.01)));
+        else if (i > 0 && i < c.keys.length - 1) p[0] = Math.max(c.keys[i - 1][0] + KEY_MIN_GAP, Math.min(c.keys[i + 1][0] - KEY_MIN_GAP, p[0] + (e.key === "ArrowRight" ? 0.01 : -0.01)));
         this.$emit("change", c);
       }
     },
-    template: `<div class="st-curve"><div>{{label}}</div><svg ref="svg" viewBox="0 0 240 140" role="img" :aria-label="label" @pointermove="move" @pointerup="finish" @pointercancel="draft=null" @dblclick="add"><path d="M12 16V116H228" class="st-axis"/><path :d="path" class="st-curve-line"/><circle v-for="(p,i) in curve.keys" :key="i" :cx="x(p)" :cy="y(p)" r="5" tabindex="0" role="slider" :aria-label="label+' '+i" :aria-valuenow="p[1]" :aria-valuemin="0" :aria-valuemax="maximum" @pointerdown="begin($event,i)" @keydown="key($event,i)"/><text x="12" y="134">0</text><text x="228" y="134" text-anchor="end">1</text></svg><p class="st-note">{{t('curve_help')}}</p><button @click="remove" :disabled="active===0||active>=value.keys.length-1">{{t('remove_key')}}</button></div>`
+    template: `<div class="st-curve" :title="tip"><div class="st-muted">{{label}}</div><svg ref="svg" viewBox="0 0 240 140" role="img" :aria-label="label" @pointermove="move" @pointerup="finish" @pointercancel="draft=null" @dblclick="add"><path d="M12 16V116H228" class="st-axis"/><path :d="path" class="st-curve-line"/><circle v-for="(p,i) in curve.keys" :key="i" :cx="x(p)" :cy="y(p)" r="5" tabindex="0" role="slider" :aria-label="label+' '+(i+1)" :aria-valuenow="p[1]" :aria-valuemin="0" :aria-valuemax="maximum" @pointerdown="begin($event,i)" @contextmenu.prevent="remove(i)" @keydown="key($event,i)"/><text x="12" y="134">0</text><text x="228" y="134" text-anchor="end">1</text></svg></div>`
   };
 
   // src/blockbench/panels.js
+  var POINTS = ["root", "a", "b"];
+  var ICONS = { root: "open_with", a: "adjust", b: "adjust" };
+  var SHRINK_DIRECTIONS = { a_to_b: 1, b_to_a: 0, center: 0.5 };
   function createPanels(controller2) {
     const run = (method, ...args) => controller2.safe(() => controller2[method](...args));
     const structure = new Panel("trail_structure", {
-      name: t("structure"),
+      name: t("panel_structure"),
       icon: "timeline",
       resizable: true,
       growable: true,
       condition: { modes: ["trail"] },
       default_position: { slot: "left_bar", float_position: [0, 0], float_size: [300, 400], height: 400 },
+      menu: new Menu([
+        { id: "trail_menu_browser", name: t("menu_browser"), icon: "inventory_2", click: () => browserDialog(controller2) },
+        "_",
+        { id: "trail_menu_import_config", name: t("import_config"), icon: "file_upload", condition: () => controller2.state.configured, click: () => run("importConfig") },
+        { id: "trail_menu_export_config", name: t("export_config"), icon: "file_download", condition: () => controller2.state.configured, click: () => run("exportConfig") },
+        { id: "trail_menu_export", name: t("menu_export"), icon: "timeline", click: () => exportDialog(controller2) }
+      ]),
       component: {
-        data: () => ({ s: controller2.state }),
-        methods: { t, run, browser() {
+        data: () => ({ s: controller2.state, points: POINTS, icons: ICONS }),
+        methods: { t, run, browse() {
           browserDialog(controller2);
         }, select(key) {
           controller2.select(key);
-        }, helpers() {
-          controller2.preview.updateMarkers();
         } },
-        template: `<div class="st-structure"><div class="st-buttons"><button @click="browser">{{t('browser')}}</button><button @click="run('openExample')">Sword Trail</button></div><template v-if="s.configured"><h3 class="st-heading">{{s.config.attachable}}</h3><ul class="st-tree"><li v-for="key in ['a','b','root']" :key="key" class="st-row" :class="{selected:s.selected===key}" @click="select(key)"><i class="material-icons">{{key==='root'?'open_with':'adjust'}}</i>{{t('point_'+key)}}</li></ul><div class="st-buttons"><button @click="run('importConfig')">{{t('import_config')}}</button><button @click="run('exportConfig')">{{t('export_config')}}</button><button @click="run('export')" :disabled="!s.linked||s.busy">{{t('export_pack')}}</button></div><p class="st-note" v-if="!s.linked">{{t('reimport')}}</p><section class="st-preview-controls"><h4>{{t('preview')}}</h4><p class="st-note">{{t('preview_tip')}}</p><div class="st-buttons"><button @click="run('play')">{{s.running?t('pause'):t('play')}}</button><button @click="run('swing')">{{t('swing')}}</button><button @click="run('reset')">{{t('reset')}}</button></div><label class="st-check-row"><input type="checkbox" v-model="s.emit">{{t('preview_emit')}}</label><label class="st-check-row"><input type="checkbox" v-model="s.helpers" @change="helpers">{{t('helpers')}}</label><label class="st-check-row"><input type="checkbox" v-model="s.wireframe" @change="helpers">{{t('wireframe')}}</label></section></template><div v-else class="st-empty-state"><p>{{t('empty')}}</p><button @click="run('choosePack')">{{t('import_pack')}}</button></div></div>`
+        template: `<div class="st-structure">
+        <div v-if="!s.configured" class="st-empty-state">
+          <p>{{ t('empty_state') }}</p>
+          <button @click="run('choosePack')">{{ t('import_pack_button') }}</button>
+          <button v-if="s.rows.length" @click="browse">{{ t('menu_browser') }}</button>
+        </div>
+        <template v-else>
+          <div class="st-bar">
+            <div class="tool" :title="t(s.running?'pause_preview':'play_preview')" @click="run('play')"><i class="material-icons">{{ s.running?'pause':'play_arrow' }}</i></div>
+            <div class="tool" :title="t('test_swing')" @click="run('swing')"><i class="material-icons">gesture</i></div>
+            <div class="tool" :title="t('reset_preview')" @click="run('reset')"><i class="material-icons">replay</i></div>
+          </div>
+          <h3 class="st-heading"><i class="material-icons">timeline</i><span class="st-ellipsis" :title="s.config.attachable">{{ s.config.attachable }}</span></h3>
+          <ul class="st-tree" role="tree">
+            <li v-for="key in points" :key="key" role="treeitem" :aria-selected="s.selected===key" class="st-row" :class="{selected:s.selected===key}" :title="key==='root'?t('point_root_tip'):''" @click="select(key)">
+              <i class="material-icons">{{ icons[key] }}</i><span class="st-label">{{ t('point_'+key) }}</span>
+            </li>
+          </ul>
+          <div v-if="!s.linked" class="st-link"><p class="st-note">{{ t('link_unloaded') }}</p><button @click="run('choosePack')">{{ t('import_pack_button') }}</button></div>
+        </template>
+      </div>`
       }
     });
+    structure.snap_menu = new Menu([...structure.menu.structure, "_", ...structure.snap_menu.structure]);
     const properties = new Panel("trail_properties", {
-      name: t("properties"),
+      name: t("panel_properties"),
       icon: "tune",
       resizable: true,
       growable: true,
+      insert_after: "trail_structure",
       condition: { modes: ["trail"], method: () => controller2.state.configured },
-      default_position: { slot: "right_bar", float_position: [0, 0], float_size: [320, 650], height: 650 },
+      default_position: { slot: "right_bar", float_position: [0, 0], float_size: [300, 400], height: 400 },
       component: {
         components: { "st-field": Field, "st-vector": Vector, "st-curve": CurveEditor },
         data: () => ({ s: controller2.state }),
-        computed: { c() {
-          return this.s.config;
-        }, boneOptions() {
-          return Object.fromEntries(this.s.bones.map((n) => [n, n]));
-        }, segments() {
-          return Math.ceil(this.c.lifetime / this.c.sampleInterval);
-        } },
-        methods: { t, set(path, v) {
-          controller2.change(path, v);
-        }, bone(key, v) {
-          controller2.setPointBone(key, v);
-        } },
-        template: `<div class="st-properties"><template v-if="c"><p v-if="s.error" class="st-error">{{s.error}}</p><section><h4>{{t('points')}}</h4><template v-for="key in ['a','b']"><label class="st-field" :key="key"><span>{{t('point_'+key)}}</span><select-input :value="c.points[key].bone" :options="boneOptions" @input="bone(key,$event)"></select-input></label><st-vector :key="key+'_position'" :label="t('position')" :value="c.points[key].position" :step=".25" @change="set('points.'+key+'.position',$event)"></st-vector></template><label class="st-field"><span>{{t('reference_root')}}</span><select-input :value="c.root" :options="boneOptions" @input="set('root',$event)"></select-input></label></section>
-        <section><h4>{{t('emission')}}</h4><label class="st-expression"><span>{{t('condition')}}</span><input class="dark_bordered focusable_input" :value="c.emitCondition" @change="set('emitCondition',$event.target.value)"></label><p class="st-note">{{t('condition_tip')}}</p><st-field :label="t('lifetime')" :value="c.lifetime" :min=".025" :max="2" :step=".025" @change="set('lifetime',$event)"></st-field><st-field :label="t('interval')" :value="c.sampleInterval" :min=".008" :max=".1" :step=".005" @change="set('sampleInterval',$event)"></st-field><p class="st-note">{{t('cost',[segments,segments*2,c.opacity.keys.some(k=>k[1]!==c.opacity.keys[0][1])?segments:1])}}</p></section>
-        <section><st-curve :label="t('width_curve')" :value="c.width" :maximum="2" @change="set('width',$event)"></st-curve><st-field :label="t('exponent')" :value="c.width.exponent" :min=".1" :max="8" @change="set('width.exponent',$event)"></st-field><st-field :label="t('anchor')" :value="c.width.anchor" :min="0" :max="1" @change="set('width.anchor',$event)"></st-field><p class="st-note">{{t('anchor_tip')}}</p></section>
-        <section><st-curve :label="t('alpha_curve')" :value="c.opacity" :maximum="1" @change="set('opacity',$event)"></st-curve><st-field :label="t('exponent')" :value="c.opacity.exponent" :min=".1" :max="8" @change="set('opacity.exponent',$event)"></st-field><st-field :label="t('opacity')" :value="c.opacity.value" :min="0" :max="1" @change="set('opacity.value',$event)"></st-field><label class="st-field"><span>{{t('color')}}</span><input type="color" :value="c.color" @change="set('color',$event.target.value)"></label><label class="st-field"><span>{{t('blend')}}</span><select-input :value="c.blend" :options="{additive:t('additive'),alpha:t('alpha')}" @input="set('blend',$event)"></select-input></label><label class="st-check-row"><input type="checkbox" :checked="c.unlit" @change="set('unlit',$event.target.checked)">{{t('unlit')}}</label></section>
-        <details><summary>{{t('advanced')}}</summary><label class="st-field"><span>{{t('fp_space')}}</span><select-input :value="c.firstPersonSpace" :options="{view_model:t('view_model'),world:t('world')}" @input="set('firstPersonSpace',$event)"></select-input></label><st-field :label="t('world_scale')" :value="c.worldScale" :min=".01" :max="10" :step=".01" @change="set('worldScale',$event)"></st-field><st-field :label="t('teleport')" :value="c.teleportDistance" :min=".1" :max="128" @change="set('teleportDistance',$event)"></st-field><label class="st-expression"><span>{{t('texture')}}</span><input class="dark_bordered focusable_input" :value="c.texture" @change="set('texture',$event.target.value)"></label><p class="st-note">{{t('texture_tip')}}</p></details></template></div>`
+        computed: {
+          c() {
+            return this.s.config;
+          },
+          point() {
+            return this.s.selected === "a" || this.s.selected === "b" ? this.s.selected : null;
+          },
+          boneOptions() {
+            return Object.fromEntries(this.s.bones.map((n) => [n, n]));
+          },
+          preset() {
+            return this.s.custom ? "custom" : presetOf(this.c.emitCondition);
+          },
+          triggers() {
+            return { attack: t("trigger_attack"), held: t("trigger_held"), custom: t("custom") };
+          },
+          spaces() {
+            return { view_model: t("space_view_model"), world: t("space_world") };
+          },
+          shrinkDirection() {
+            return Object.keys(SHRINK_DIRECTIONS).find((key) => SHRINK_DIRECTIONS[key] === this.c.width.anchor) ?? "saved";
+          },
+          shrinkOptions() {
+            const options = Object.fromEntries(Object.keys(SHRINK_DIRECTIONS).map((key) => [key, t("anchor_" + key)]));
+            if (this.shrinkDirection === "saved") options.saved = t("anchor_saved");
+            return options;
+          },
+          // A longer lifetime raises the interval, so the segment budget is never exceeded.
+          minInterval() {
+            return fitInterval(this.c.lifetime, 8e-3);
+          },
+          segments() {
+            return segmentCount(this.c);
+          }
+        },
+        methods: {
+          t,
+          set(path, value) {
+            if (!controller2.change(path, value)) this.$forceUpdate();
+          },
+          bone(key, value) {
+            controller2.setPointBone(key, value);
+          },
+          setShrinkDirection(value) {
+            if (Object.hasOwn(SHRINK_DIRECTIONS, value)) this.set("width.anchor", SHRINK_DIRECTIONS[value]);
+          },
+          setLifetime(value) {
+            if (!controller2.edit((config) => {
+              config.lifetime = value;
+              config.sampleInterval = fitInterval(value, config.sampleInterval);
+            })) this.$forceUpdate();
+          },
+          choose(value) {
+            this.s.custom = value === "custom";
+            if (value !== "custom") this.set("emitCondition", TRIGGERS[value]);
+          }
+        },
+        template: `<div class="st-properties">
+        <p v-if="s.error" class="st-error">{{ s.error }}</p>
+        <template v-if="c">
+          <section v-if="point" :key="'point_'+point"><h4>{{ t('point_'+point) }}</h4>
+            <label class="st-field"><span>{{ t('bone') }}</span><select-input :value="c.points[point].bone" :options="boneOptions" @input="bone(point,$event)"></select-input></label>
+            <st-vector :label="t('position')" :value="c.points[point].position" :step=".25" @change="set('points.'+point+'.position',$event)"></st-vector>
+          </section>
+          <section><h4>{{ t('section_trigger') }}</h4>
+            <label class="st-field"><span>{{ t('trigger') }}</span><select-input :value="preset" :options="triggers" @input="choose"></select-input></label>
+            <template v-if="preset==='custom'">
+              <label class="st-expression"><span>{{ t('custom_condition') }}</span><input class="dark_bordered focusable_input" :value="c.emitCondition" @change="set('emitCondition',$event.target.value)"></label>
+              <p class="st-note">{{ t('condition_tip') }}</p>
+            </template>
+          </section>
+          <section><h4>{{ t('section_trail') }}</h4>
+            <st-field :label="t('lifetime')" :tip="t('lifetime_tip')" :value="c.lifetime" :min=".025" :max="2" :step=".025" @change="setLifetime($event)"></st-field>
+            <st-curve :label="t('width_curve')" :tip="t('curve_tip')" :value="c.width" :maximum="2" @change="set('width',$event)"></st-curve>
+          </section>
+          <details class="st-advanced"><summary><i class="fa fa-angle-right st-fold"></i>{{ t('section_advanced') }}</summary>
+            <st-field :label="t('interval')" :tip="t('interval_tip')" :value="c.sampleInterval" :min="minInterval" :max=".1" :step=".005" @change="set('sampleInterval',$event)"></st-field>
+            <p class="st-note">{{ t('segments',[segments,${MAX_SEGMENTS}]) }}</p>
+            <label class="st-field" :title="t('anchor_tip')"><span>{{ t('anchor') }}</span><select-input :value="shrinkDirection" :options="shrinkOptions" @input="setShrinkDirection"></select-input></label>
+            <label class="st-field" :title="t('fp_space_tip')"><span>{{ t('fp_space') }}</span><select-input :value="c.firstPersonSpace" :options="spaces" @input="set('firstPersonSpace',$event)"></select-input></label>
+            <label class="st-toggle" :title="t('teleport_tip')"><input type="checkbox" :checked="c.teleportTrail" @change="set('teleportTrail',$event.target.checked)"><span>{{ t('teleport') }}</span></label>
+          </details>
+        </template>
+      </div>`
       }
     });
     return [structure, properties];
   }
-  var extraStyles = `.st-preview-controls{padding:10px}.st-curve svg{width:100%;display:block;touch-action:none}.st-curve .st-axis{fill:none;stroke:var(--color-border)}.st-curve .st-curve-line{fill:none;stroke:var(--color-accent);stroke-width:2}.st-curve circle{fill:var(--color-accent);cursor:move}.st-curve text{fill:var(--color-subtle_text);font-size:11px}.st-curve circle:focus{outline:2px solid var(--color-text)}.st-properties details{margin-top:12px}.st-properties input[type=color]{width:100%;height:26px}.st-browser-bar{flex-wrap:wrap}`;
-
-  // src/blockbench/styles.js
   var styles = `
-#panel_trail_structure,#panel_trail_properties {overflow-y:auto;overflow-x:hidden;min-height:0;}
-#panel_trail_structure>.panel_vue_wrapper,#panel_trail_properties>.panel_vue_wrapper {flex:0 0 auto;overflow:visible;}
-.st-structure {padding:0 0 6px;}
-.st-tree {list-style:none;margin:0;padding:2px 0;}
-.st-row {display:flex;align-items:center;gap:4px;min-height:28px;padding:0 6px;cursor:pointer;color:var(--color-text);}
-.st-row:hover {background:var(--color-button);}
-.st-row.selected {background:var(--color-selected);}
-.st-empty-state {padding:12px;display:flex;flex-direction:column;gap:8px;color:var(--color-subtle_text);white-space:normal;}
-.st-properties {padding:4px 10px 10px;}
-.st-properties section {margin:10px 0;padding-top:6px;border-top:1px solid var(--color-border);}
-.st-properties h4 {margin:0 0 4px;font-size:1em;color:var(--color-subtle_text);font-weight:normal;}
-.st-heading {margin:4px 6px 8px;font-size:1.1em;font-weight:normal;overflow-wrap:anywhere;}
-.st-field {display:grid;grid-template-columns:minmax(70px,42%) minmax(0,1fr);align-items:center;gap:8px;margin:5px 0;min-height:24px;}
-.st-field>.bb-select {min-width:0;width:100%;height:24px;line-height:24px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.st-vector {margin:8px 0;}
-.st-vector-label {display:flex;align-items:center;gap:6px;margin-bottom:2px;color:var(--color-subtle_text);}
-.st-vector>div:last-child {display:flex;gap:4px;}
-.st-tag {font-size:.85em;padding:0 5px;border-radius:3px;background:var(--color-back);}
-.st-reset {margin-left:auto;font-size:16px;cursor:pointer;}
-.st-reset:hover {color:var(--color-light);}
-.st-number-input {display:flex;flex:1;min-width:0;}
-.st-number-input .nslide_tool {width:100%;min-width:0;margin:0;height:24px;}
-.st-number-input .nslide {width:100%;min-width:0;height:24px;line-height:24px;text-align:center;}
-.st-expression {display:block;margin:6px 0;}
-.st-expression input {display:block;width:100%;margin-top:3px;}
-.st-note {margin:4px 0;color:var(--color-subtle_text);white-space:normal;font-size:.92em;}
-.st-error {margin:6px 8px;color:var(--color-error);white-space:normal;}
-.st-buttons {display:flex;flex-wrap:wrap;gap:4px;margin:10px 6px 0;}
-.st-check-row {display:flex;align-items:center;gap:6px;margin:3px 0;cursor:pointer;}
-.st-properties details summary {cursor:pointer;color:var(--color-subtle_text);margin:6px 0 2px;}
-.st-grow {flex:1;min-width:0;overflow-wrap:anywhere;}
-.st-ellipsis {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.st-browser {display:flex;flex-direction:column;gap:6px;}
-.st-browser-bar {display:flex;align-items:center;gap:6px;}
-.st-entity-list {list-style:none;margin:0;padding:0;max-height:48vh;min-height:120px;overflow:auto;border:1px solid var(--color-border);background:var(--color-back);}
-.st-entity-list li {display:flex;align-items:center;gap:8px;padding:4px 8px;cursor:default;}
-.st-entity-list li:hover {background:var(--color-button);}
-.st-entity-list li.selected {background:var(--color-selected);}
-.st-entity-list li.st-unavailable {opacity:.55;}
+  #panel_trail_structure, #panel_trail_properties {overflow-y:auto; overflow-x:hidden; min-height:0;}
+  #panel_trail_structure > .panel_vue_wrapper, #panel_trail_properties > .panel_vue_wrapper {flex:0 0 auto; overflow:visible;}
+  .st-structure {padding:0 0 6px;}
+  .st-bar {display:flex; align-items:center; gap:2px; padding:2px 6px; border-bottom:1px solid var(--color-border);}
+  .st-bar .tool {width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:3px;}
+  .st-bar .tool:hover {background:var(--color-button);}
+  .st-heading {display:flex; align-items:center; gap:6px; margin:8px 8px 4px; font-size:1.1em; font-weight:normal;}
+  .st-tree {list-style:none; margin:0; padding:2px 0;}
+  .st-row {display:flex; align-items:center; gap:6px; height:28px; padding:0 6px 0 12px; cursor:pointer; white-space:nowrap; color:var(--color-text);}
+  .st-row:hover {background:var(--color-button);}
+  .st-row.selected {background:var(--color-selected);}
+  .st-row .st-label {min-width:0; overflow:hidden; text-overflow:ellipsis;}
+  .st-empty-state, .st-link {padding:12px; display:flex; flex-direction:column; gap:8px; color:var(--color-subtle_text); white-space:normal;}
+  .st-properties {padding:4px 10px 10px;}
+  .st-properties section {margin:10px 0; padding-top:6px; border-top:1px solid var(--color-border);}
+  .st-properties section:first-child {border-top:none; margin-top:4px;}
+  .st-properties h4 {margin:0 0 4px; font-size:1em; color:var(--color-subtle_text); font-weight:normal;}
+  .st-field {display:grid; grid-template-columns:minmax(70px,42%) minmax(0,1fr); align-items:center; gap:8px; margin:5px 0; min-height:24px;}
+  .st-field > .bb-select {min-width:0; width:100%; height:24px; line-height:24px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .st-vector {margin:8px 0;}
+  .st-vector-label {display:flex; align-items:center; gap:6px; margin-bottom:2px; color:var(--color-subtle_text);}
+  .st-vector > div:last-child {display:flex; gap:4px;}
+  .st-number-input {display:flex; flex:1; min-width:0;}
+  .st-number-input .nslide_tool {width:100%; min-width:0; margin:0; height:24px;}
+  .st-number-input .nslide {width:100%; min-width:0; height:24px; line-height:24px; text-align:center;}
+  .st-expression {display:block; margin:6px 0;}
+  .st-expression input {display:block; width:100%; margin-top:3px;}
+  .st-note {margin:4px 0; color:var(--color-subtle_text); white-space:normal; font-size:.92em;}
+  .st-error {margin:6px 0; color:var(--color-error); white-space:normal;}
+  .st-advanced {margin-top:10px; padding-top:6px; border-top:1px solid var(--color-border);}
+  .st-advanced summary {cursor:pointer; color:var(--color-subtle_text); margin:0 0 4px;}
+  .st-advanced .st-fold {width:12px; text-align:center; transition:transform .1s;}
+  .st-advanced[open] .st-fold {transform:rotate(90deg);}
+  .st-toggle {display:flex; align-items:center; gap:8px; margin:8px 0; cursor:pointer;}
+  .st-curve {margin:8px 0;}
+  .st-curve svg {width:100%; display:block; touch-action:none;}
+  .st-curve .st-axis {fill:none; stroke:var(--color-border);}
+  .st-curve .st-curve-line {fill:none; stroke:var(--color-accent); stroke-width:2;}
+  .st-curve circle {fill:var(--color-accent); cursor:move;}
+  .st-curve circle:focus {outline:2px solid var(--color-text);}
+  .st-curve text {fill:var(--color-subtle_text); font-size:11px;}
+  .st-grow {flex:1; min-width:0;}
+  .st-ellipsis {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .st-muted {color:var(--color-subtle_text);}
+  .st-browser, .st-export {display:flex; flex-direction:column; gap:6px;}
+  .st-browser-bar, .st-export-bar {display:flex; align-items:center; gap:6px;}
+  .st-export-bar a {color:var(--color-accent);}
+  .st-entity-list {list-style:none; margin:0; padding:0; max-height:48vh; min-height:120px; overflow:auto; border:1px solid var(--color-border); background:var(--color-back);}
+  .st-entity-list li {display:flex; align-items:center; gap:8px; padding:4px 8px; cursor:default;}
+  .st-entity-list li:hover {background:var(--color-button);}
+  .st-entity-list li.selected {background:var(--color-selected);}
+  .st-entity-list li.st-unavailable {opacity:.55;}
+  .st-entity-list li.st-empty {justify-content:center; color:var(--color-subtle_text); padding:24px 8px;}
+  .st-export-list {max-height:32vh;}
+  .st-status {font-size:.9em; color:var(--color-subtle_text); white-space:nowrap;}
+  .st-status-invalid {color:var(--color-error);}
 `;
 
   // src/blockbench/interface.js
   function registerInterface(c) {
-    const items = [], mode = new Mode("trail", { name: t("mode"), icon: "timeline", default_tool: "trail_move_tool", selectElements: false, condition: () => Format?.id === "bedrock", onSelect: () => c.enterMode(), onUnselect: () => c.leaveMode() });
+    const items = [];
+    const mode = new Mode("trail", { name: t("mode"), icon: "timeline", default_tool: "trail_move_tool", selectElements: false, condition: () => Format?.id === "bedrock", onSelect: () => c.enterMode(), onUnselect: () => c.leaveMode() });
     Modes.vue?.$forceUpdate();
-    for (const [name, key, icon] of [["move", "v", "icon-gizmo"], ["rotate", "r", "sync"]]) {
-      const id = "trail_" + name + "_tool";
+    const tool = (id, icon, key, name, value) => {
       while (Toolbars.tools.children.some((x) => x.id === id)) Toolbars.tools.remove(id);
-      const item = new Tool(id, { name: t(name), icon, category: "tools", modes: ["trail"], selectElements: false, transformerMode: "hidden", keybind: new Keybind({ key }), onSelect() {
-        c.state.tool = name;
-        c.gizmo.attach();
-      } });
+      const item = new Tool(id, {
+        name: t(name),
+        description: t(name + "_tip"),
+        icon,
+        category: "tools",
+        modes: ["trail"],
+        selectElements: false,
+        transformerMode: "hidden",
+        keybind: new Keybind({ key }),
+        onSelect() {
+          c.state.tool = value;
+          if (value === "rotate") c.state.selected = "root";
+          c.gizmo.attach();
+        }
+      });
       items.push(item);
-      Toolbars.tools.add(item);
-    }
-    const action = (id, name, icon, fn, menu, extra = {}) => {
-      const item = new Action(id, { name: t(name), icon, category: "file", click: () => c.safe(fn), ...extra });
+      return item;
+    };
+    [tool("trail_move_tool", "icon-gizmo", "v", "tool_move", "move"), tool("trail_rotate_tool", "sync", "r", "tool_rotate", "rotate")].forEach((item, i) => Toolbars.tools.add(item, i));
+    const action = (id, options, menu) => {
+      const item = new Action(id, { category: "file", ...options });
       items.push(item);
       if (menu) MenuBar.addAction(item, menu);
+      return item;
     };
-    action("trail_import_pack", "import_pack", "file_upload", () => c.choosePack(), "file.import");
-    action("trail_export_pack", "export_pack", "file_download", () => c.export(), "file.export");
-    action("trail_browser", "browser", "inventory_2", () => browserDialog(c), "tools");
-    action("trail_example", "example", "sports_martial_arts", () => c.openExample(), "tools");
-    action("trail_play", "play", "play_arrow", () => c.play(), null, { keybind: new Keybind({ key: 32 }), condition: { modes: ["trail"], method: () => c.state.configured } });
-    const panels = createPanels(c), css = Blockbench.addCSS(styles + extraStyles);
-    return () => {
+    action("trail_import_pack", { name: t("menu_import"), icon: "timeline", click: () => c.choosePack() }, "file.import");
+    action("trail_export_pack", { name: t("menu_export"), icon: "timeline", click: () => exportDialog(c) }, "file.export");
+    action("trail_browser", { name: t("menu_browser"), icon: "inventory_2", category: "tools", click: () => browserDialog(c) }, "tools");
+    action("trail_play", { name: t("play_preview"), icon: "play_arrow", category: "animation", keybind: new Keybind({ key: 32 }), condition: { modes: ["trail"], method: () => c.state.configured }, click: () => c.safe(() => c.play()) });
+    const panels = createPanels(c), css = Blockbench.addCSS(styles);
+    return function dispose() {
       if (Modes.selected?.id === "trail") Modes.options.edit.select();
       for (const item of items) {
-        Toolbars.tools.remove(item);
+        if (item instanceof Tool) Toolbars.tools.remove(item);
         item.delete();
       }
       for (const p of panels) {

@@ -6,7 +6,6 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test test/*.test.mjs",
-    "examples": "node scripts/examples.mjs",
     "test:blockbench": "node scripts/test-blockbench.mjs"
   },
   "devDependencies": {

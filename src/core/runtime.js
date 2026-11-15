@@ -1,7 +1,7 @@
-import {set,when,loop,flat,toMolang,num} from './molanguage.js';
-import {curveMolang} from '../config.js';
+import {set,when,loop,flat,toMolang} from './molanguage.js';
+import {curveMolang,segmentCount,DISCONTINUITY_DISTANCE} from '../config.js';
 export function createRuntime(config,names){
-const SEGMENTS=Math.ceil(config.lifetime/config.sampleInterval),INTERVAL=config.sampleInterval,LIFETIME=config.lifetime;
+const SEGMENTS=segmentCount(config),INTERVAL=config.sampleInterval,LIFETIME=config.lifetime;
 const AX = ['x', 'y', 'z'], ENDS = ['a', 'b'];
 const slots = ['live', ...Array.from({ length: SEGMENTS }, (_, i) => 'h' + i)];
 const point = (slot, end, a) => `v.st_${slot}_${end}${a}`;
@@ -18,6 +18,7 @@ function initialize() {
   return flat([
     ...['ready', 'warm', 'active', 'attack', 'previous_attack', 'fp', 'previous_fp', 'emit', 'previous_emit', 'acc', 'stamp', 'frame'].map(k => set('v.st_' + k, 0)),
     set('v.st_last_time', -1), set('v.st_bone_clock', 10000),
+    AX.map(a=>[set('v.st_units_'+a,.9375/16),set('v.st_previous_units_'+a,.9375/16)]),
     ...['x', 'y', 'z', 'yaw', 'pitch'].map(a => set('v.st_owner_' + a, 0)),
     slots.map(s => [set(age(s), LIFETIME+1), ENDS.map(e => AX.map(a => set(point(s, e, a), 0)))]),
     Array.from({ length: SEGMENTS * 2 }, (_, i) => [
@@ -41,7 +42,7 @@ function captureFrame() {
   return [
     set('t.base', `q.bone_orientation_trs('${names.a}')`),
     set('t.tip', `q.bone_orientation_trs('${names.b}')`),
-    set('t.root', `q.bone_orientation_trs('${config.root}')`),
+    set('t.root', `q.bone_orientation_trs('${names.root}')`),
     set('t.ca', 'math.cos(t.root.r.x)'), set('t.sa', '-math.sin(t.root.r.x)'),
     set('t.cb', 'math.cos(t.root.r.y)'), set('t.sb', 'math.sin(t.root.r.y)'),
     set('t.cc', 'math.cos(t.root.r.z)'), set('t.sc', '-math.sin(t.root.r.z)'),
@@ -55,9 +56,11 @@ function captureFrame() {
     set('t.yaw', config.firstPersonSpace==='world'?'v.st_fp?q.camera_rotation(1):(q.is_riding?q.head_y_rotation(0)-q.target_y_rotation:q.body_y_rotation)':'q.is_riding?q.head_y_rotation(0)-q.target_y_rotation:q.body_y_rotation'),
     set('t.pitch',config.firstPersonSpace==='world'?'v.st_fp?q.camera_rotation(0):0':'0'),
     set('t.reset', '!v.st_ready||v.st_previous_fp!=v.st_fp||q.life_time-v.st_last_time>0.15||q.life_time<v.st_last_time'),
-    // Reset on teleports; never connect an old trail to a different location.
-    set('t.displacement', AX.map(a => `(t.pos${a}-v.st_owner_${a})*(t.pos${a}-v.st_owner_${a})`).join('+')),
-    when(`t.displacement>${config.teleportDistance**2}`, set('t.reset', 1)),
+    // Position discontinuity heuristic; enabled trails may bridge the jump.
+    config.teleportTrail?[]:[
+      set('t.displacement', AX.map(a => `(t.pos${a}-v.st_owner_${a})*(t.pos${a}-v.st_owner_${a})`).join('+')),
+      when(`t.displacement>${DISCONTINUITY_DISTANCE**2}`, set('t.reset', 1)),
+    ],
     when('t.reset', [clear(), set('v.st_ready', 1), set('t.dt', 0)]),
     // Third person: bring earlier points into the current actor model frame.
     // Yaw and the model/world Z flip match ClothPhysics / Simple Ragdoll.
@@ -67,14 +70,15 @@ function captureFrame() {
       set('t.cp0','math.cos(v.st_owner_pitch)'),set('t.sp0','math.sin(v.st_owner_pitch)'),set('t.cp1','math.cos(t.pitch)'),set('t.sp1','math.sin(t.pitch)'),
       set('t.cy', 'math.cos(t.yaw)'), set('t.sy', 'math.sin(t.yaw)'),
       set('t.cd', 'math.cos(v.st_owner_yaw-t.yaw)'), set('t.sd', 'math.sin(v.st_owner_yaw-t.yaw)'),
-      AX.map(a => set('t.d' + a, `(v.st_owner_${a}-t.pos${a})*${num(16 / config.worldScale)}`)),
+      AX.map(a => set('t.d' + a, `v.st_owner_${a}-t.pos${a}`)),
       set('t.ox', 't.cy*t.dx+t.sy*t.dz'), set('t.oz', 't.sy*t.dx-t.cy*t.dz'),
       slots.map(s => ENDS.map(e => [
-        set('t.x', point(s,e,'x')),set('t.y','t.cp0*'+point(s,e,'y')+'+t.sp0*'+point(s,e,'z')),set('t.z','-t.sp0*'+point(s,e,'y')+'+t.cp0*'+point(s,e,'z')),
+        AX.map(a=>set('t.scaled_'+a,`${point(s,e,a)}*v.st_previous_units_${a}`)),
+        set('t.x', 't.scaled_x'),set('t.y','t.cp0*t.scaled_y+t.sp0*t.scaled_z'),set('t.z','-t.sp0*t.scaled_y+t.cp0*t.scaled_z'),
         set('t.y','t.y+t.dy'),set('t.nz','-t.sd*t.x+t.cd*t.z+t.oz'),
-        set(point(s, e, 'x'), 't.cd*t.x+t.sd*t.z+t.ox'),
-        set(point(s,e,'y'),'t.cp1*t.y-t.sp1*t.nz'),
-        set(point(s,e,'z'),'t.sp1*t.y+t.cp1*t.nz'),
+        set(point(s, e, 'x'), '(t.cd*t.x+t.sd*t.z+t.ox)/v.st_units_x'),
+        set(point(s,e,'y'),'(t.cp1*t.y-t.sp1*t.nz)/v.st_units_y'),
+        set(point(s,e,'z'),'(t.sp1*t.y+t.cp1*t.nz)/v.st_units_z'),
       ])),
     ]),
     slots.map(s => set(age(s), `math.min(${age(s)}+t.dt,${LIFETIME+1})`)),
@@ -105,6 +109,7 @@ function captureFrame() {
       set(age('live'), 0),
     ]),
     AX.map(a => set('v.st_owner_' + a, 't.pos' + a)), set('v.st_owner_yaw', 't.yaw'),set('v.st_owner_pitch','t.pitch'),
+    AX.map(a=>set('v.st_previous_units_'+a,'v.st_units_'+a)),
     set('v.st_previous_emit', 'v.st_emit'), set('v.st_previous_attack', 'v.st_attack'), set('v.st_previous_fp', 'v.st_fp'),
     set('v.st_last_time', 'q.life_time'), set('v.st_frame', 'v.st_frame+1'),
   ];
@@ -125,8 +130,7 @@ function captureNodes() {
   ], [clear(), set('v.st_warm', 0)]));
 }
 
-// Each ribbon quad uses TWO triangles. A&S's triangle texture clips the quad
-// to a triangle, while ClothPhysics's three-bone affine fit maps its 3 vertices
+// Each ribbon quad uses TWO mesh triangles. The three-bone affine fit maps its 3 vertices
 // exactly. Shared vertices therefore remain joined even when the sword twists.
 function triangleFit(i) {
   return flat([
@@ -170,8 +174,7 @@ function meshNodes(i) {
     set(field(i, 'stamp'), 'v.st_frame'), set(field(i, 'visible'), 0),
     set(field(i, 'sx'), 0), set(field(i, 'sy'), 0),
     when(`v.st_active&&v.st_ready&&${age(newer)}<${LIFETIME}&&${age(older)}<${LIFETIME}`, [
-      // Taper old cross-sections about their centres, so the tail vanishes
-      // continuously without using separate render controllers per segment.
+      // Taper old cross-sections about the configured anchor.
       ...[[newer, 'a', 'b'], [older, 'c', 'd']].map(([slot, aName, bName]) => [
         set('t.width', curveMolang(config.width,`math.clamp(${age(slot)}/${LIFETIME},0,1)`)),
         AX.map(a => [

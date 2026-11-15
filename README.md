@@ -1,108 +1,72 @@
 # Simple Trail
 
-为 Minecraft 基岩版附着物制作拖尾的 Blockbench 插件。
-
-沿用 Simple Ragdoll 的资源包工作流：导入资源包，选择附着物，设置采样点和轨迹变化，预览并导出。内置 **Sword Trail** 普通刀光示例。
+为 Minecraft 基岩版附着物制作动态拖尾的 Blockbench 插件
 
 ## 使用
 
-1. 在 Blockbench 的「文件 → 插件」中，从文件加载 `dist/simple_trail.js`。
-2. 打开「工具 → Sword Trail 示例」，或通过「文件 → 导入 → 导入拖尾资源包」选择 `.zip`、`.mcpack`、`.mcaddon`。
-3. 在附着物列表中双击模型，进入「拖尾」模式。选择起点 A、终点 B，用三维手柄或数值调整位置。两个点可以分别绑定不同骨骼。
-4. 设置保留时间、采样间隔、宽度曲线、不透明度曲线、颜色和混合方式。
-5. 点击「运行模拟」，选择「操纵整个附着物」，使用移动（V）或旋转（R）手柄挥动模型。也可以点击「试挥一次」。空格暂停或继续，Esc 取消当前拖动。
-6. 在附着物列表中勾选要生成拖尾的项目，导出资源包。同一个附着物选择一个采样模型，可以同时处理多个附着物。
+1. 在 Blockbench 的“文件 → 插件”中，从文件加载 `dist/simple_trail.js`
+2. 通过“文件 → 导入 → 导入拖尾资源包...”选择 `.mcpack`、`.mcaddon` 或 `.zip`
+3. 在列表中双击附着物，进入拖尾模式
+4. 设置起点 A 和终点 B。选中端点后用移动手柄或数值调整位置，每个端点可以绑定不同的骨骼
+5. 点击播放预览，选择“整个附着物”，用移动（V）或旋转（R）手柄挥动模型，也可以点击“试挥一次”。空格暂停或继续，Esc 取消当前拖动
+6. 通过“文件 → 导出 → 导出拖尾资源包...”勾选要导出的附着物。同一个附着物只能选择一个模型
 
-拖尾配置可以独立导入、导出为 `.trail.json`，也会随 `.bbmodel` 项目保存。重新启动 Blockbench 后，导入对应的原资源包即可重新关联并导出。已生成的包也可以重新导入修改，不会重复叠加拖尾资源。
+拖尾配置保存在 `.bbmodel` 项目中，也可以从拖尾面板菜单导入或导出为 `.trail.json`。重新打开项目后，导入原资源包即可继续导出。生成过拖尾的资源包可以重新导入修改，不会重复叠加
 
 ## 参数
 
-| 参数 | 作用 |
-| --- | --- |
-| 采样点 A / B | 定义轨迹的两条边。坐标与 Bedrock 模型中的骨骼枢轴坐标一致，使用模型单位，随所选骨骼运动 |
-| 参考根骨骼 | 拖尾模型继承的顶层骨骼，用于消除重复变换 |
-| Molang 条件 | 决定游戏中何时记录新轨迹。`v.trail_attack` 是玩家攻击进度，填 `1` 可持续记录 |
-| 保留时间 / 采样间隔 | 控制长度和采样密度，最多 32 段历史，每段两个三角面 |
-| 宽度曲线 / 收缩中心 | 控制轨迹随时间收窄或展开。曲线横轴为归一化寿命，0 表示刚生成，1 表示到期 |
-| 不透明度曲线 / 基础不透明度 | 控制每段轨迹的透明度。固定透明度共用一个渲染控制器，渐变透明度为每段生成一个控制器 |
-| 颜色 / 混合 / 光照 | 支持发光叠加或透明混合，可选择是否受环境光照影响 |
-| 第一人称空间 | 默认手持模型空间。世界空间同时补偿玩家移动和摄像机转动 |
-| 角色模型缩放 | 模型单位与世界坐标之间的比例，默认 `0.9375` |
-| 瞬移重置距离 | 超过指定距离时清除历史，避免拉出很长的连线 |
-| 拖尾贴图 | 资源包内的 PNG 路径，留空使用内置贴图。自定义贴图需与 `assets/triangle.png` 的三角形区域一致 |
+| 参数 | 控制什么 | 默认值 |
+| --- | --- | --- |
+| 产生拖尾 | 游戏中何时记录新的轨迹。可选“挥动攻击时”“持握在主手时”，或自定义 Molang 条件 | 挥动攻击时 |
+| 保留时间 | 轨迹从生成到消失的时间，越长拖尾越长 | 0.2 秒 |
+| 宽度变化 | 轨迹宽度随时间的变化。横轴 0 为刚生成，1 为消失 | 逐渐收窄 |
 
-曲线支持拖动关键点、双击添加、方向键微调，以及删除内部关键点。不透明度按轨迹段变化，不是顶点渐变。
+“高级”中的参数一般不需要修改
 
-## 导出与预览
+| 参数 | 控制什么 | 默认值 |
+| --- | --- | --- |
+| 采样间隔 | 越小越平滑，历史段数越多。历史最多 32 段，延长保留时间时会自动增大 | 0.025 秒 |
+| 收缩方向 | A → B：A 侧向 B 收拢；B → A：B 侧向 A 收拢；两端 → 中间：两侧同时向中点收拢 | 两端 → 中间 |
+| 第一人称空间 | 手持模型空间，或补偿玩家移动和镜头转动的世界空间 | 手持模型空间 |
+| 瞬移拖尾 | 开启时连接瞬移前后的轨迹；关闭时，相邻两次位置记录相距超过 2 格便清空旧轨迹 | 关闭 |
 
-导出的是**所选资源包的修改版**，保留它的 manifest、原有持握动画、渲染设置及其他文件，为选中的附着物增加独立模型、动画、控制器、材质和贴图。解开 `.mcaddon` 后只导出选中的资源包，不重新打包行为包。没有 manifest 的模型压缩包可用于编辑，但必须补齐原资源包的 manifest 才能导出可导入游戏的 `.mcpack`。
+瞬移拖尾使用位置突变判断，不依赖行为包事件；检查的是相邻采样之间的位置差，不是整个拖尾的长度。连接仍受产生条件、保留时间和第一人称空间影响；手持模型空间不补偿玩家的世界位移。核对 A&S 1.13 的鞘翅拖尾代码后未发现专用瞬移检测，因此将两格阈值保留为内部规则。旧配置中距离为 0 会迁移为开启，其余值迁移为关闭。
 
-生成的拖尾通过附着物读取玩家与自身骨骼的信息，不修改玩家实体定义，不需要行为包脚本。当前运行入口面向玩家持有的附着物。原资源包仍需提供可用的附着物模型、持握动画及其依赖。
+参考根骨骼自动沿起点 A 所在骨骼向上查找。坐标换算自动读取持有者的 `q.model_scale`，并结合导入资源包中玩家的 `scripts.scale` 和附着物自身的 `scripts.scale`；运行时缩放变化会同步换算历史点，骨骼缩放仍由 TRS 采样处理。没有导入玩家定义时使用原版客户端缩放 0.9375。其他资源包的客户端缩放表达式、未公开的玩家变量无法保证从附着物取得；要跟随自定义表达式，需要一并导入玩家定义并保证所引用的玩家变量可跨实体读取。
 
-预览用于检查三维运动、采样点和拖尾形状。它不会执行任意游戏 Molang 查询，也不模拟第一人称镜头；预览中的「记录新的轨迹」开关代替游戏触发条件。模型在普通编辑模式中的修改会用于导出，导入的动画供查看，动画编辑不是这个插件的导出范围。
+拖尾贴图始终使用内置渐变，导出后仍可直接编辑 PNG。
 
-运行代码沿用已在 Sword Trail 中验证的骨骼采样和三角面拟合。新增参数组合仍需进游戏确认，尤其是第一人称世界空间和透明度渐变。当前验证包括 Node 数学与资源测试、Blockbench 5.2.2 的中文和英文界面操作；这不等同于对所有附着物进行游戏兼容性验证。
+自定义条件中，`v.trail_attack` 是玩家的攻击进度，范围 0 至 1。填 `1` 可以持续产生拖尾
 
-## Sword Trail 示例
+## 导出
 
-- `examples/sword_trail.mcpack`：已生成刀光的钻石剑资源包，可导入游戏或插件
-- `examples/sword_trail_source.mcpack`：未注入拖尾的源资源包
-- `examples/sword_trail.trail.json`：对应的可编辑拖尾配置
-- `examples/source/`：示例源文件
+导出的是所选资源包的修改版，保留原有的 manifest、持握动画、材质定义和其他文件，为选中的附着物增加模型、动画、动画控制器、渲染控制器、半透明材质定义和渐变贴图。导入 `.mcaddon` 时只导出其中的资源包，不会改动行为包
+
+拖尾使用真正的三角网格，渐变沿整条历史轨迹连续分布，停止产生轨迹后继续变淡。每条拖尾最多使用两个渲染控制器：一个处理长度随当前帧变化的前端，另一个处理全部固定间隔的历史段。朝向始终由两个采样端点决定，不会转向摄像机
+
+固定材质使用 A&S 已使用的普通透明混合方式（`SourceAlpha / OneMinusSrcAlpha`）、双面绘制、关闭深度写入和 UV 动画，并继承原版 `entity_emissive`。生成器将独立命名的定义合并到游戏会加载的 `materials/entity.material`；原定义保留，重新导入时先还原原文件再生成。透明度来自 PNG，没有颜色、透明度曲线、光照或混合方式的设置界面，也不生成渲染控制器的 `color` / `ignore_lighting`。开发者可自行调整贴图和材质；旧配置中的外观字段仍会在读取时移除
+
+- 导入和导出均不要求包含 manifest.json；原包有则保留，没有则不自动生成，可将导出的资源文件合并到开发包中
+- 拖尾通过附着物读取玩家和骨骼的位置，不修改玩家实体，不需要行为包脚本，只适用于玩家持有的附着物
+- 预览使用同一张渐变贴图和普通透明混合，用于检查运动、形状和连续渐隐；不模拟游戏的最终渲染管线、不执行游戏中的 Molang 查询，也不模拟第一人称镜头，播放时始终记录轨迹
+- 在编辑模式中对模型的修改会写入导出的资源包。导入的动画仅供查看，不会被导出
+- 第一人称世界空间尚未在游戏中逐一确认
 
 ## 开发
 
-使用 Node.js 22 或更新版本：
+需要 Node.js 22 或更新版本
 
 ```sh
 npm ci
-npm run examples
 npm run build
 npm test
 ```
 
-`npm run examples` 重新生成示例，`npm run build` 将示例一同打包进插件。修改示例或生成器后按此顺序构建。
-
-Blockbench 集成测试使用独立的测试配置目录，以 `--remote-debugging-port=9241` 启动 Blockbench，且 `--userData` 路径必须包含 `trail-bb-test-profile`：
+Blockbench 集成测试使用独立的配置目录，以 `--remote-debugging-port=9241` 启动 Blockbench，`--userData` 路径必须包含 `trail-bb-test-profile`
 
 ```sh
 npm run test:blockbench
 node scripts/test-blockbench.mjs --english
 ```
 
-测试输出保存在 `test/output/`。插件包包含 Three.js TransformControls、JSZip 和 Pako 的第三方许可。钻石剑贴图来自 Mojang 的 [bedrock-samples](https://github.com/Mojang/bedrock-samples)，示例持握动画和刀光技术基于现有 Sword Trail 示例。
-
----
-
-# English
-
-Simple Trail is a Blockbench plugin for creating trails on Minecraft Bedrock attachables.
-
-It follows Simple Ragdoll’s resource-pack workflow: import a pack, choose an attachable, place two sample points, configure the trail, preview it and export. **Sword Trail**, an ordinary sword trail, is included as an editable example.
-
-## Getting started
-
-1. Load `dist/simple_trail.js` from Blockbench’s plugin manager.
-2. Choose **Tools → Sword Trail Example**, or import a `.zip`, `.mcpack` or `.mcaddon` through **File → Import → Import Trail Resource Pack**.
-3. Double-click an attachable. In Trail mode, place points A and B using the 3D handles or numeric fields. Each point follows its selected bone.
-4. Set lifetime, sampling interval, width and opacity curves, color and blending.
-5. Start the preview, select **Move the whole attachable**, and use the move (V) or rotate (R) handle. **Test Swing** provides a quick motion. Space pauses or resumes; Escape cancels a drag.
-6. Check the entries to include in the attachable browser and export. Each attachable uses one selected sampling geometry; multiple attachables can be exported together.
-
-Configurations can be imported and exported as `.trail.json`, and are saved with `.bbmodel` projects. Reimport the original resource pack to relink a saved project after restarting Blockbench. Generated packs can also be reimported without accumulating duplicate trail resources.
-
-## Configuration and export
-
-Points use Bedrock model coordinates, like bone pivots. Lifetime and interval determine the number of historical segments, up to 32. Width and opacity curves use normalized age from 0 to 1. The width anchor controls which part of the sampled span stays fixed as it narrows. Constant opacity shares one render controller; varying opacity uses one controller per segment and is not a per-vertex gradient.
-
-The default emission expression uses `v.trail_attack`, the player’s attack progress. Set it to `1` for continuous emission. First person defaults to view-model space; world space also compensates player translation and camera rotation. A teleport threshold clears old positions after large jumps. Custom PNG textures must match the triangular mask in `assets/triangle.png`.
-
-Export produces a modified copy of the selected resource pack, preserving its manifest, original holding animations and other resources. Generated assets are isolated per attachable. Importing an add-on does not cause its behavior pack to be repackaged. A resource-pack manifest is required for an importable `.mcpack`.
-
-The runtime supports player-held attachables without modifying the player entity or requiring behavior-pack scripts. The source pack must supply its own working attachable model, holding animations and dependencies.
-
-The preview checks 3D movement and trail shape; it does not evaluate arbitrary game Molang queries or reproduce a first-person camera. Its recording checkbox replaces the game emission condition. Model edits are included in export; editing imported animation assets is outside the plugin’s export scope.
-
-The bone sampling and triangle fitting come from the existing Sword Trail implementation. New parameter combinations still require in-game validation, especially first-person world space and varying opacity. Automated verification covers mathematical/resource tests and Blockbench 5.2.2 UI operations in Chinese and English.
-
-The configured example is `examples/sword_trail.mcpack`; its unmodified source pack and standalone configuration are beside it. Build with Node.js 22+: `npm ci`, `npm run examples`, `npm run build`, then `npm test`.
+测试用的资源包在 `test/fixtures/sword`，输出保存在 `test/output/`。插件包含 Three.js TransformControls、JSZip 和 Pako 的第三方许可。测试用的钻石剑贴图来自 Mojang 的 [bedrock-samples](https://github.com/Mojang/bedrock-samples)
