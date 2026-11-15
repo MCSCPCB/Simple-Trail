@@ -47,13 +47,6 @@ export function defaults(attachable,geometry,model){
     width:{keys:[[0,1],[.25,.5625],[.5,.25],[.75,.0625],[1,0]],anchor:.5},
     firstPersonSpace:'view_model',teleportTrail:false};
 }
-// Both points are queried in actor space. Use A's top-level ancestor as the
-// ribbon frame, irrespective of the order of unrelated roots in the file.
-export function referenceRoot(config,model){
-  const map=new Map(model.bones.map(b=>[b.name,b]));let bone=map.get(config.points.a.bone);
-  while(bone.parent)bone=map.get(bone.parent);
-  return bone.name;
-}
 export function validate(config,model){
   const c=normalize(config);
   if(c.format_version!==1)fail('config_version');

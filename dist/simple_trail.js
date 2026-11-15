@@ -2804,12 +2804,6 @@
       teleportTrail: false
     };
   }
-  function referenceRoot(config, model) {
-    const map = new Map(model.bones.map((b) => [b.name, b]));
-    let bone = map.get(config.points.a.bone);
-    while (bone.parent) bone = map.get(bone.parent);
-    return bone.name;
-  }
   function validate(config, model) {
     const c = normalize(config);
     if (c.format_version !== 1) fail("config_version");
@@ -3077,19 +3071,6 @@
       return [
         set("t.base", `q.bone_orientation_trs('${names.a}')`),
         set("t.tip", `q.bone_orientation_trs('${names.b}')`),
-        set("t.root", `q.bone_orientation_trs('${names.root}')`),
-        set("t.ca", "math.cos(t.root.r.x)"),
-        set("t.sa", "-math.sin(t.root.r.x)"),
-        set("t.cb", "math.cos(t.root.r.y)"),
-        set("t.sb", "math.sin(t.root.r.y)"),
-        set("t.cc", "math.cos(t.root.r.z)"),
-        set("t.sc", "-math.sin(t.root.r.z)"),
-        ...[
-          ["t.cc*t.cb", "t.cc*t.sb*t.sa-t.sc*t.ca", "t.cc*t.sb*t.ca+t.sc*t.sa"],
-          ["t.sc*t.cb", "t.sc*t.sb*t.sa+t.cc*t.ca", "t.sc*t.sb*t.ca-t.cc*t.sa"],
-          ["-t.sb", "t.cb*t.sa", "t.cb*t.ca"]
-        ].flatMap((row, i) => row.map((value, j) => set(`v.st_root${i}${j}`, value))),
-        AX.map((a) => [set("v.st_root_" + a, "t.root.t." + a), set("v.st_root_s" + a, `(t.root.s.${a}<0?-1:1)*math.max(math.abs(t.root.s.${a}),0.00001)`)]),
         AX.map((a) => [set("t.a" + a, `t.base.t.${a}`), set("t.b" + a, `t.tip.t.${a}`)]),
         set("t.dt", "math.clamp(q.life_time-v.st_last_time,0,0.1)"),
         vector("t.pos", AX.map((_, i) => `q.position(${i})`)),
@@ -3256,12 +3237,8 @@
             ])
           ]),
           ...["p", "q", "r"].map((dest, k) => AX.map((a) => set("t." + dest + a, "t." + (i % 2 ? ["b", "d", "c"] : ["a", "b", "c"])[k] + a))),
-          // Query positions include the parent's animated root. Undo it once,
-          // because these geometry bones inherit that root again at render time.
-          ...["p", "q", "r"].map((dest) => [
-            AX.map((a) => set("t.d" + a, `t.${dest}${a}-v.st_root_${a}`)),
-            AX.map((a, k) => set("t." + dest + a, `(${AX.map((d, j) => `v.st_root${j}${k}*t.d${d}`).join("+")})/v.st_root_s${a}`))
-          ]),
+          // The ribbon has an unbound identity root; sampled actor-space points
+          // are also its render coordinates, independent of the current hand pose.
           triangleFit(i)
         ])
       ]));
@@ -3379,7 +3356,7 @@
       seen.add(input.attachable);
       const source = descriptionOf(record), geometry = resources.geometries.get(source.geometry?.[input.geometry]);
       if (!geometry) fail("missing_geometry", [input.geometry]);
-      const c = validate(input, geometry), id = resourceKey(c), N = segmentCount(c), names = { a: id + "_a", b: id + "_b", root: referenceRoot(c, geometry) };
+      const c = validate(input, geometry), id = resourceKey(c), N = segmentCount(c), names = { a: id + "_a", b: id + "_b", root: id + "_root" };
       models[geometry.description.identifier] = clone(geometry);
       savedConfigs.push(c);
       const runtime = createRuntime(c, names);
@@ -3392,12 +3369,8 @@
         model.bones.push({ name: names[end], parent: c.points[end].bone, pivot: c.points[end].position });
       }
       write(`models/entity/simple_trail/${id}.source.geo.json`, { format_version: "1.16.0", "minecraft:geometry": [model] });
-      const root = clone(geometry.bones.find((b) => b.name === names.root));
-      delete root.cubes;
-      delete root.poly_mesh;
-      delete root.texture_meshes;
-      delete root.locators;
-      const pivot = root.pivot ?? [0, 0, 0];
+      if (geometry.bones.some((b) => b.name === names.root)) fail("marker_collision");
+      const pivot = [0, 0, 0], root = { name: names.root, pivot: clone(pivot) };
       const ribbon = { description: { identifier: "geometry." + id + ".ribbon", texture_width: 16, texture_height: 16, visible_bounds_width: 16, visible_bounds_height: 16, visible_bounds_offset: [0, 0, 0] }, bones: [root] };
       for (let i = 0; i < N * 2; i++) {
         const n = id + "_strip" + i, s = i >> 1;

@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import {clone,normalize,validate,segmentCount,referenceRoot} from './config.js';
+import {clone,normalize,validate,segmentCount} from './config.js';
 import {descriptionOf,indexResources,parseJson} from './resources.js';
 import {createRuntime} from './core/runtime.js';
 import {toMolang,checkMolang} from './core/molanguage.js';
@@ -31,7 +31,7 @@ export function generate(resources,configs){
     const record=resources.attachables.get(input.attachable);if(!record)fail('missing_attachable',[input.attachable]);
     if(seen.has(input.attachable))fail('one_geometry');seen.add(input.attachable);
     const source=descriptionOf(record),geometry=resources.geometries.get(source.geometry?.[input.geometry]);if(!geometry)fail('missing_geometry',[input.geometry]);
-    const c=validate(input,geometry),id=resourceKey(c),N=segmentCount(c),names={a:id+'_a',b:id+'_b',root:referenceRoot(c,geometry)};models[geometry.description.identifier]=clone(geometry);savedConfigs.push(c);
+    const c=validate(input,geometry),id=resourceKey(c),N=segmentCount(c),names={a:id+'_a',b:id+'_b',root:id+'_root'};models[geometry.description.identifier]=clone(geometry);savedConfigs.push(c);
     const runtime=createRuntime(c,names);
     const rawBones=runtime.animatedBones(),generatedBones=new Set(Object.keys(rawBones));
     // Only generated keys and unquoted variable references are namespaced.
@@ -40,8 +40,11 @@ export function generate(resources,configs){
     const model=clone(geometry);model.description.identifier='geometry.'+id+'.source';
     for(const end of ['a','b']){if(model.bones.some(b=>b.name===names[end]))fail('marker_collision');model.bones.push({name:names[end],parent:c.points[end].bone,pivot:c.points[end].position});}
     write(`models/entity/simple_trail/${id}.source.geo.json`,{format_version:'1.16.0','minecraft:geometry':[model]});
-    const root=clone(geometry.bones.find(b=>b.name===names.root));delete root.cubes;delete root.poly_mesh;delete root.texture_meshes;delete root.locators;
-    const pivot=root.pivot??[0,0,0];
+    // Samples already include the source's binding/inherited player pose. A
+    // private, unbound root draws that actor-space history without applying a
+    // newer hand pose again. The source skeleton and its animations stay intact.
+    if(geometry.bones.some(b=>b.name===names.root))fail('marker_collision');
+    const pivot=[0,0,0],root={name:names.root,pivot:clone(pivot)};
     const ribbon={description:{identifier:'geometry.'+id+'.ribbon',texture_width:16,texture_height:16,visible_bounds_width:16,visible_bounds_height:16,visible_bounds_offset:[0,0,0]},bones:[root]};
     for(let i=0;i<N*2;i++){
       const n=id+'_strip'+i,s=i>>1;

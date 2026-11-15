@@ -4,9 +4,9 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import JSZip from 'jszip';
 import {inflateSync} from 'node:zlib';
-import {Vector3,Quaternion,Euler} from 'three';
+import {Vector3,Quaternion,Euler,Matrix4} from 'three';
 import {trailGradient} from '../src/assets.js';
-import {defaults,clone,validate,curveValue,normalize,segmentCount,presetOf,TRIGGERS,MAX_SEGMENTS,fitInterval,referenceRoot} from '../src/config.js';
+import {defaults,clone,validate,curveValue,normalize,segmentCount,presetOf,TRIGGERS,MAX_SEGMENTS,fitInterval} from '../src/config.js';
 import {importPacks,indexResources,descriptionOf} from '../src/resources.js';
 import {generate,exportPack,unwrapResources,resourceKey} from '../src/export.js';
 import {createRuntime} from '../src/core/runtime.js';
@@ -16,7 +16,7 @@ import {TrailHistory} from '../src/preview/history.js';
 const files=new Map();async function walk(dir,prefix=''){for(const e of await fs.readdir(dir,{withFileTypes:true})){if(e.isDirectory())await walk(path.join(dir,e.name),prefix+e.name+'/');else files.set(prefix+e.name,new Uint8Array(await fs.readFile(path.join(dir,e.name))));}}
 await walk('test/fixtures/sword');const resources=indexResources(files),model=resources.geometries.get('geometry.sword_trail.sword'),config=defaults('minecraft:diamond_sword','default',model);
 function simulation(c=clone(config)){
-  const runtime=createRuntime(c,{a:'a',b:'b',root:referenceRoot(c,model)}),init=compileJs(runtime.initialize()),capture=compileJs(runtime.captureNodes());
+  const runtime=createRuntime(c,{a:'a',b:'b'}),init=compileJs(runtime.initialize()),capture=compileJs(runtime.captureNodes());
   const v=strict({}),s={time:0,dt:1/60,position:[0,0,0],yaw:0,pitch:0,a:[0,9,0],b:[0,20.5,0]},trs=p=>({t:{x:p[0],y:p[1],z:p[2]},r:{x:0,y:0,z:0},s:{x:1,y:1,z:1}});
   const q={life_time:()=>s.time,anim_time:()=>s.time,delta_time:()=>s.dt,is_riding:()=>0,body_y_rotation:()=>s.yaw,camera_rotation:i=>i?s.yaw:s.pitch,position:i=>s.position[i],bone_orientation_trs:n=>trs(n==='a'?s.a:n==='b'?s.b:[0,0,0])};
   init(v,q,MATH);v.st_active=1;v.st_emit=1;v.st_attack=.4;v.st_warm=.1;v.st_bone_clock=0;
@@ -36,25 +36,28 @@ test('edited models survive reimport without modifying shared source geometry by
   const again=indexResources(generate(clean,[config]).files);assert.deepEqual(again.geometries.get('geometry.'+resourceKey(config)+'.source').bones[1].pivot,[1,2,3]);
 });
 
-test('nonzero and bound roots keep the ribbon in the source reference frame',()=>{
+test('bound source roots are preserved while the ribbon uses an unbound actor-space root',()=>{
   const r=indexResources(new Map(files)),edited=clone(model),root=edited.bones[0];root.pivot=[3,7,-2];root.binding='q.item_slot_to_bone_name(c.item_slot)';r.geometries.set(model.description.identifier,edited);
   root.poly_mesh={positions:[[3,7,-2]],polys:[]};
-  const output=indexResources(generate(r,[config]).files),ribbon=output.geometries.get('geometry.'+resourceKey(config)+'.ribbon');assert.deepEqual(ribbon.bones[0].binding,root.binding);assert.deepEqual(ribbon.bones[1].pivot,root.pivot);assert.deepEqual(ribbon.bones[3].poly_mesh.positions,[[3,7.5,-2],[2.5,6.5,-2],[3.5,6.5,-2]]);assert.equal(ribbon.bones[0].poly_mesh,undefined);
+  const output=indexResources(generate(r,[config]).files),id=resourceKey(config),ribbon=output.geometries.get('geometry.'+id+'.ribbon');
+  assert.deepEqual(output.geometries.get('geometry.'+id+'.source').bones[0],root);
+  assert.deepEqual(ribbon.bones[0],{name:id+'_root',pivot:[0,0,0]});
+  assert.deepEqual(ribbon.bones[1].pivot,[0,0,0]);assert.deepEqual(ribbon.bones[3].poly_mesh.positions,[[0,.5,0],[-.5,-.5,0],[.5,-.5,0]]);
 });
 
 test('export preserves source bone names that resemble generated names',()=>{
   for(const rootName of ['st_strip_grip','st_strip0','v.st_root']){
-    const r=indexResources(new Map(files)),edited=clone(model),oldRoot=referenceRoot(config,model);
+    const r=indexResources(new Map(files)),edited=clone(model),oldRoot=model.bones[0].name;
     for(const bone of edited.bones){if(bone.name===oldRoot)bone.name=rootName;if(bone.parent===oldRoot)bone.parent=rootName;}
     r.geometries.set(model.description.identifier,edited);
     const c=clone(config);
     for(const point of Object.values(c.points))if(point.bone===oldRoot)point.bone=rootName;
     const out=indexResources(generate(r,[c]).files),id=resourceKey(c);
     const source=out.geometries.get('geometry.'+id+'.source'),ribbon=out.geometries.get('geometry.'+id+'.ribbon');
-    assert.ok(source.bones.some(b=>b.name===rootName));assert.equal(ribbon.bones[0].name,rootName);
+    assert.ok(source.bones.some(b=>b.name===rootName));assert.equal(ribbon.bones[0].name,id+'_root');
     const capture=out.json.get('animation_controllers/simple_trail/'+id+'.json').animation_controllers['controller.animation.'+id+'.capture'].states.a.on_exit.join('');
     const queriedBones=[...capture.matchAll(/q\.bone_orientation_trs\('([^']+)'\)/g)].map(m=>m[1]);
-    assert.ok(queriedBones.includes(rootName));
+    assert.deepEqual(queriedBones,[id+'_a',id+'_b']);
     for(const name of queriedBones)assert.ok(source.bones.some(b=>b.name===name),`Missing queried bone: ${name}`);
     const display=out.json.get('animations/simple_trail/'+id+'.json').animations['animation.'+id+'.display'];
     for(const name of Object.keys(display.bones)){assert.ok(name.startsWith(id+'_strip'));assert.ok(ribbon.bones.some(b=>b.name===name),`Missing animated bone: ${name}`);}
@@ -220,11 +223,56 @@ test('old distance options migrate with positive switch polarity and retired fie
   assert.throws(()=>validate({...clone(config),teleportTrail:2},model),/Teleport Trail/);
 });
 
-test('automatic reference root follows the endpoint ancestry instead of unrelated file order',()=>{
+test('unrelated source roots do not affect the independent ribbon frame',()=>{
   const edited=clone(model);edited.bones.unshift({name:'unrelated',pivot:[99,99,99]});
   const r=indexResources(new Map(files));r.geometries.set(model.description.identifier,edited);
   const out=indexResources(generate(r,[config]).files),ribbon=out.geometries.get('geometry.'+resourceKey(config)+'.ribbon');
-  assert.equal(ribbon.bones[0].name,model.bones[0].name);assert.notEqual(ribbon.bones[0].name,'unrelated');
+  assert.deepEqual(ribbon.bones[0],{name:resourceKey(config)+'_root',pivot:[0,0,0]});
+});
+
+test('inherited RightItem poses do not transform actor-space history a second time',()=>{
+  const edited=clone(model);edited.bones[0]={name:'RightItem',pivot:[0,0,0]};
+  edited.bones[1].parent='RightItem';delete edited.bones[1].binding;
+  const r=indexResources(new Map(files));r.geometries.set(model.description.identifier,edited);
+  const c=clone(config);c.width={keys:[[0,1],[1,1]],anchor:0};
+  const result=generate(r,[c]),out=indexResources(result.files),id=resourceKey(c);
+  const source=out.geometries.get('geometry.'+id+'.source'),ribbon=out.geometries.get('geometry.'+id+'.ribbon');
+  assert.deepEqual(source.bones.slice(0,edited.bones.length),edited.bones,'source animation inheritance must survive');
+  assert(!ribbon.bones.some(b=>edited.bones.some(s=>s.name===b.name)),'effect bones must not inherit source/player animation by name');
+  const runtime=createRuntime(c,{a:'a',b:'b',root:'RightItem'}),v=strict({});
+  const init=compileJs(runtime.initialize()),capture=compileJs(runtime.captureNodes());
+  const fits=Array.from({length:segmentCount(c)*2},(_,i)=>compileJs(runtime.meshNodes(i)));
+  const preview=new TrailHistory(c),D=Math.PI/180;
+  const trs=(translation,rotation,scale)=>({t:Object.fromEntries([...'xyz'].map((a,i)=>[a,translation[i]])),r:Object.fromEntries([...'xyz'].map((a,i)=>[a,rotation[i]])),s:Object.fromEntries([...'xyz'].map((a,i)=>[a,scale[i]]))});
+  const matrix=pose=>new Matrix4().compose(new Vector3(...Object.values(pose.t)),new Quaternion().setFromEuler(new Euler(-pose.r.x*D,pose.r.y*D,-pose.r.z*D,'ZYX')),new Vector3(...Object.values(pose.s)));
+  const points=[new Vector3(0,10.529384255464432,-6.076325233176565),new Vector3(0,6.871137521997848,-4.7221643038177445)];
+  let time=0,root,ends=[];
+  const q={life_time:()=>time,anim_time:()=>time,delta_time:()=>.016,is_riding:()=>0,body_y_rotation:()=>0,position:()=>0,
+    bone_orientation_trs:name=>name==='RightItem'?root:trs(ends[name==='a'?0:1].toArray(),[0,0,0],[1,1,1])};
+  init(v,q,MATH);v.st_active=1;v.st_emit=1;v.st_warm=.1;v.st_bone_clock=0;
+  for(let frame=0;frame<36;frame++){
+    time+=.016;
+    root=trs([-6+Math.sin(frame*.2)*2,15+Math.cos(frame*.1),1],[frame*7,30+frame*3,-frame*4],[1+.2*Math.sin(frame*.2),1,1]);
+    ends=points.map(p=>p.clone().applyAxisAngle(new Vector3(1,0,0),-Math.PI/2).applyMatrix4(matrix(root)));
+    capture(v,q,MATH);preview.update(frame?.016:0,...ends.map(p=>p.toArray()));
+    // The renderer may now have the next player pose, while the cached samples
+    // and their frame stamp still belong to the capture above.
+    root=trs([3,18,-2],[frame*7+40,70+frame*3,25-frame*4],[1.4,.8,1.2]);
+    const inherited=matrix(root),segments=preview.segments();
+    for(let i=0;i<segments.length*2;i++){
+      fits[i](v,q,MATH);
+      if(!v['st_mesh'+i+'_visible'])continue;
+      const field=k=>v['st_mesh'+i+'_'+k],outer=new Quaternion().setFromEuler(new Euler(-field('rx')*D,field('ry')*D,-field('rz')*D,'ZYX'));
+      const inner=new Quaternion().setFromAxisAngle(new Vector3(0,0,1),-field('iz')*D);
+      const bone=ribbon.bones.find(b=>b.name===id+'_strip'+i+'_mesh');
+      for(const [j,p]of bone.poly_mesh.positions.entries()){
+        const actual=new Vector3(...p).applyQuaternion(inner).multiply(new Vector3(field('sx'),field('sy'),1)).applyQuaternion(outer).add(new Vector3(field('px'),field('py'),field('pz')));
+        if(ribbon.bones[0].name==='RightItem')actual.applyMatrix4(inherited);
+        const expected=new Vector3(...segments[i>>1].triangles[i%2][j]);
+        assert(actual.distanceTo(expected)<1e-5,`frame ${frame}, triangle ${i}, vertex ${j}: history moved with the current hand pose`);
+      }
+    }
+  }
 });
 
 test('history stays fixed in world space when actor scale, position and yaw change together',()=>{
@@ -273,7 +321,7 @@ test('first-person world compensation includes camera pitch',()=>{
   assert.ok(Math.abs(s.v.st_h0_ay-9/Math.sqrt(2))<1e-6);assert.ok(Math.abs(s.v.st_h0_az-9/Math.sqrt(2))<1e-6);
 });
 test('triangle fit maps exported mesh vertices to targets, including tilted/skewed planes',()=>{
-  const runtime=createRuntime(config,{a:'a',b:'b',root:referenceRoot(config,model)}),ribbon=indexResources(generate(resources,[config]).files).geometries.get('geometry.'+resourceKey(config)+'.ribbon');
+  const runtime=createRuntime(config,{a:'a',b:'b'}),ribbon=indexResources(generate(resources,[config]).files).geometries.get('geometry.'+resourceKey(config)+'.ribbon');
   const mesh=ribbon.bones.find(b=>b.poly_mesh),vertices=mesh.poly_mesh.positions.map(p=>p.map((x,i)=>x-mesh.pivot[i]));
   for(const [p,q,r]of [[[1,4,3],[-2,1,2],[3,2,-1]],[[0,1,0],[-1,0,0],[1,0,0]],[[3,6,5],[3,2,1],[3,2,9]]]){
     const v=strict({}),values={};for(const [name,arr]of [['p',p],['q',q],['r',r]])for(const [i,a]of ['x','y','z'].entries())values[name+a]=arr[i];
